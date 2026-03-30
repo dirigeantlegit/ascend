@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ASCEND">
+<meta name="theme-color" content="#060810">
+<link rel="manifest" href="manifest.json">
+<!-- iOS PWA icons (à créer, voir instructions) -->
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>ASCEND Protocol</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#060810;--bg2:#0a0e1a;--card:#0d1120;--card2:#111827;
+  --border:#1a2035;--border2:#242f4a;
+  --text:#e2e8f8;--muted:#4a5580;--muted2:#7a88b8;
+  --gold:#f5c842;--gold2:#e8a800;
+  --blue:#3b82f6;--cyan:#06b6d4;--green:#10b981;
+  --orange:#f97316;--red:#ef4444;--purple:#8b5cf6;
+  --growth:#06b6d4;--face:#a78bfa;--sport:#10b981;--hygiene:#64748b;
+  --xp-bar:#3b82f6;
+}
+html,body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;overscroll-behavior:none;font-size:16px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+
+/* ── HEADER ── */
+#header{position:sticky;top:0;z-index:200;background:rgba(6,8,16,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2)}
+#header-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 6px}
+#logo{font-size:16px;font-weight:700;letter-spacing:4px;text-transform:uppercase;background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#date-display{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted2)}
+
+/* XP BAR */
+#xp-section{padding:6px 16px 10px}
+#xp-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+#rank-label{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--gold)}
+#xp-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted2)}
+#xp-bar-wrap{height:5px;background:var(--border2);border-radius:2px;overflow:hidden;position:relative}
+#xp-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width 0.6s cubic-bezier(.4,0,.2,1);position:relative}
+#xp-bar-fill::after{content:'';position:absolute;right:0;top:0;width:8px;height:100%;background:rgba(255,255,255,0.6);filter:blur(3px)}
+#xp-bar-glow{position:absolute;top:-2px;height:9px;border-radius:4px;background:linear-gradient(90deg,transparent,rgba(6,182,212,0.3));pointer-events:none;transition:width 0.6s cubic-bezier(.4,0,.2,1)}
+
+/* STATS ROW */
+#stats-row{display:flex;gap:1px;background:var(--border);border-top:1px solid var(--border)}
+.stat-box{flex:1;background:var(--bg2);padding:10px 6px;text-align:center}
+.stat-val{font-family:'Share Tech Mono',monospace;font-size:17px;font-weight:700;line-height:1}
+.stat-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+
+/* ── TABS ── */
+#tabs{display:flex;overflow-x:auto;background:var(--bg2);border-bottom:1px solid var(--border2);scrollbar-width:none;padding:0 4px}
+#tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:11px 14px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;min-width:54px}
+.tab.active{border-bottom-color:var(--cyan)}
+.tab-icon{font-size:18px;line-height:1}
+.tab-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);transition:color 0.2s}
+.tab.active .tab-lbl{color:var(--cyan)}
+.tab-xp{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted)}
+.tab.active .tab-xp{color:var(--gold)}
+
+/* ── PAGES ── */
+.page{display:none;padding:14px 14px 110px;position:relative;z-index:1}
+.page.active{display:block}
+
+/* DAY HEADER */
+.day-hero{padding:14px 0 18px}
+.day-name{font-size:32px;font-weight:700;letter-spacing:-0.5px;line-height:1}
+.day-sub{font-size:14px;color:var(--muted2);margin-top:4px;font-family:'Share Tech Mono',monospace}
+.badge-today{font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:2px;background:rgba(6,182,212,0.15);color:var(--cyan);border:1px solid rgba(6,182,212,0.3);text-transform:uppercase}
+
+/* DAY PROGRESS GLOBAL */
+.day-prog{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden}
+.day-prog::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,0.04),transparent);pointer-events:none}
+.day-prog-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.day-prog-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
+.day-prog-nums{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--cyan)}
+.day-prog-bar{height:6px;background:var(--border2);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.day-prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width 0.5s ease}
+.day-xp-earn{font-size:11px;color:var(--gold);font-family:'Share Tech Mono',monospace}
+.day-complete{text-align:center;padding:8px 0 2px;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+/* ── CAT PROGRESS BARS ── */
+.cat-progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.cat-prog-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.cat-prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.cat-prog-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.cat-prog-pct{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted2)}
+.cat-prog-bar{height:4px;background:var(--border2);border-radius:2px;overflow:hidden}
+.cat-prog-fill{height:100%;border-radius:2px;transition:width 0.5s ease}
+.cat-prog-done{font-size:10px;color:var(--muted);margin-top:4px;font-family:'Share Tech Mono',monospace}
+.cpf-growth{background:linear-gradient(90deg,var(--growth),#0ea5e9)}
+.cpf-face{background:linear-gradient(90deg,var(--face),#c084fc)}
+.cpf-sport{background:linear-gradient(90deg,var(--sport),#34d399)}
+.cpf-hygiene{background:linear-gradient(90deg,#64748b,#94a3b8)}
+
+/* ── SECTION ── */
+.sec{margin-bottom:20px}
+.sec-header{display:flex;align-items:center;gap:8px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--border)}
+.sec-icon{font-size:16px;line-height:1}
+.sec-title{font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);flex:1}
+.sec-xp{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold)}
+.sec-time{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted)}
+.items{display:flex;flex-direction:column;gap:4px}
+
+/* ── ITEM ── */
+.item{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color 0.15s}
+.item.done{background:#0a1a12;border-color:#1a3a28}
+.item.done .ititle{text-decoration:line-through;color:var(--muted)}
+.item-top{display:flex;align-items:center;padding:13px 12px 13px 14px;gap:12px}
+.item-chk-zone{display:flex;align-items:center;gap:12px;flex:1;min-width:0;cursor:pointer}
+.item-right{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.chk{width:26px;height:26px;border-radius:6px;flex-shrink:0;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all 0.2s;position:relative}
+.item.done .chk{background:var(--green);border-color:var(--green)}
+.chk::after{content:'✓';display:none;color:#000;font-size:15px;font-weight:900;line-height:1}
+.item.done .chk::after{display:block}
+.ititle{font-size:15px;font-weight:600;line-height:1.35}
+.icat{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 6px;border-radius:2px;flex-shrink:0}
+.ixp{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);flex-shrink:0}
+.iexp{font-size:15px;color:var(--muted);cursor:pointer;transition:transform 0.2s;flex-shrink:0;line-height:1;padding:4px}
+.item.expanded .iexp{transform:rotate(180deg)}
+.idesc{display:none;padding:0 14px 14px 52px;font-size:13px;color:var(--muted2);line-height:1.75;font-family:'Rajdhani',sans-serif;font-weight:400}
+.item.expanded .idesc{display:block}
+.item.priority-high{border-color:rgba(6,182,212,0.25)}
+.item.priority-high .chk{border-color:rgba(6,182,212,0.4)}
+
+/* ── SPORT CARD ── */
+.sport-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px}
+.sport-card.all-done{background:#0a1a12;border-color:#1a3a28}
+.sport-hdr{padding:15px 14px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.sport-arr{font-size:14px;color:var(--muted);transition:transform 0.2s}
+.sport-card.open .sport-arr{transform:rotate(180deg)}
+.sport-bdy{display:none;border-top:1px solid var(--border);padding:0 14px 14px}
+.sport-card.open .sport-bdy{display:block}
+.ex{border-bottom:1px solid var(--border);overflow:hidden}
+.ex:last-child{border-bottom:none}
+.ex.done .exname{text-decoration:line-through;color:var(--muted)}
+.ex-top{padding:12px 0;display:flex;align-items:center;gap:12px}
+.ex-chk-z{display:flex;align-items:center;gap:12px;flex:1;cursor:pointer}
+.exchk{width:20px;height:20px;border-radius:4px;flex-shrink:0;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.ex.done .exchk{background:var(--green);border-color:var(--green)}
+.exchk::after{content:'✓';display:none;color:#000;font-size:11px;font-weight:900}
+.ex.done .exchk::after{display:block}
+.exbody{flex:1}
+.exname{font-size:14px;font-weight:600;margin-bottom:4px;line-height:1.35}
+.exmeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.exsets{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--green)}
+.exrest{font-size:11px;color:var(--muted)}
+.exprog{font-size:11px;color:var(--muted2);font-style:italic}
+.ex-exp-btn{font-size:13px;color:var(--muted);cursor:pointer;transition:transform 0.2s;flex-shrink:0}
+.ex.expanded .ex-exp-btn{transform:rotate(180deg)}
+.exdetail{display:none;padding:0 0 12px 32px;font-size:12px;color:var(--muted2);line-height:1.7}
+.ex.expanded .exdetail{display:block}
+
+/* XP POPUP */
+.xp-popup{position:fixed;pointer-events:none;font-family:'Share Tech Mono',monospace;font-size:15px;font-weight:700;color:var(--gold);z-index:999;animation:xpFloat 1.2s ease-out forwards}
+@keyframes xpFloat{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-60px)}}
+
+/* RANK UP FLASH */
+.rank-flash{position:fixed;inset:0;z-index:998;display:flex;align-items:center;justify-content:center;background:rgba(6,8,16,0.85);animation:flashIn 2.5s ease-out forwards;pointer-events:none}
+@keyframes flashIn{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
+.rank-flash-inner{text-align:center;animation:scaleIn 0.3s ease-out}
+@keyframes scaleIn{0%{transform:scale(0.7)}100%{transform:scale(1)}}
+.rank-flash-title{font-size:13px;letter-spacing:6px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px}
+.rank-flash-name{font-size:40px;font-weight:700;letter-spacing:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* HOME PAGE */
+#home-hero{padding:24px 0 28px;text-align:center}
+#home-rank-circle{width:120px;height:120px;border-radius:50%;border:2px solid var(--gold2);margin:0 auto 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(245,200,66,0.08),transparent);position:relative}
+#home-rank-circle::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(245,200,66,0.2)}
+#home-rank-emoji{font-size:36px;line-height:1}
+#home-rank-name{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:3px}
+#home-xp-big{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted2);margin-bottom:5px}
+#home-total-xp{font-size:34px;font-weight:700;letter-spacing:-1px;color:var(--gold);line-height:1}
+#home-streak{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:14px;font-weight:600;color:var(--orange)}
+.home-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.home-stat-card{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:16px;text-align:center}
+.home-stat-icon{font-size:22px;margin-bottom:7px}
+.home-stat-val{font-family:'Share Tech Mono',monospace;font-size:22px;font-weight:700;line-height:1}
+.home-stat-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.today-btn{display:block;width:100%;padding:16px;background:linear-gradient(90deg,rgba(59,130,246,0.2),rgba(6,182,212,0.2));border:1px solid rgba(6,182,212,0.4);border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);cursor:pointer;text-align:center;margin-bottom:14px;transition:all 0.2s}
+.today-btn:active{background:rgba(6,182,212,0.2);transform:scale(0.98)}
+
+/* RANKS TABLE */
+.ranks-section{margin-top:22px}
+.ranks-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);margin-bottom:12px}
+.rank-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:7px;margin-bottom:5px}
+.rank-row.current-rank{border-color:var(--gold2);background:rgba(245,200,66,0.06)}
+.rank-emoji{font-size:20px;width:30px;text-align:center}
+.rank-info{flex:1}
+.rank-name{font-size:15px;font-weight:700}
+.rank-req{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted)}
+.rank-check{color:var(--gold);font-size:16px}
+
+/* MISC */
+.cat-growth{background:rgba(6,182,212,0.12);color:var(--growth);border:1px solid rgba(6,182,212,0.25)}
+.cat-face{background:rgba(167,139,250,0.12);color:var(--face);border:1px solid rgba(167,139,250,0.25)}
+.cat-sport{background:rgba(16,185,129,0.12);color:var(--sport);border:1px solid rgba(16,185,129,0.25)}
+.cat-hygiene{background:rgba(100,116,139,0.12);color:#94a3b8;border:1px solid rgba(100,116,139,0.25)}
+
+@media(max-width:400px){.day-name{font-size:28px}.tab-lbl{font-size:9px}.ititle{font-size:14px}}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-top">
+    <div id="logo">ASCEND</div>
+    <div id="date-display"></div>
+  </div>
+  <div id="xp-section">
+    <div id="xp-row">
+      <span id="rank-label">RANG : —</span>
+      <span id="xp-label">0 / 0 XP</span>
+    </div>
+    <div id="xp-bar-wrap">
+      <div id="xp-bar-fill" style="width:0%"></div>
+      <div id="xp-bar-glow" style="width:0%"></div>
+    </div>
+  </div>
+  <div id="stats-row">
+    <div class="stat-box">
+      <div class="stat-val" id="stat-total-xp" style="color:var(--gold)">0</div>
+      <div class="stat-lbl">XP Total</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="stat-streak" style="color:var(--orange)">0🔥</div>
+      <div class="stat-lbl">Streak</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="stat-today-pct" style="color:var(--cyan)">0%</div>
+      <div class="stat-lbl">Aujourd'hui</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="stat-level" style="color:var(--purple)">Nv.1</div>
+      <div class="stat-lbl">Niveau</div>
+    </div>
+  </div>
+  <div id="tabs"></div>
+</div>
+
+<div id="pages"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// PWA — Service Worker registration
+// ═══════════════════════════════════════════════════
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// RANKS & XP
+// ═══════════════════════════════════════════════════
+const RANKS=[
+  {name:"Dormant",     emoji:"💤", minXP:0,    color:"#64748b"},
+  {name:"Éveillé",    emoji:"👁",  minXP:100,  color:"#94a3b8"},
+  {name:"Initié",     emoji:"⚡",  minXP:300,  color:"#60a5fa"},
+  {name:"Discipliné", emoji:"🔱",  minXP:700,  color:"#34d399"},
+  {name:"Forgé",      emoji:"⚔️",  minXP:1500, color:"#f59e0b"},
+  {name:"Ascendant",  emoji:"🦅",  minXP:3000, color:"#f97316"},
+  {name:"Élite",      emoji:"🔥",  minXP:6000, color:"#ef4444"},
+  {name:"Apex",       emoji:"👑",  minXP:12000,color:"#f5c842"},
+];
+function getRank(xp){let r=RANKS[0];for(const rank of RANKS)if(xp>=rank.minXP)r=rank;else break;return r;}
+function getNextRank(xp){for(const rank of RANKS)if(xp<rank.minXP)return rank;return null;}
+function getLevel(xp){return Math.floor(xp/100)+1;}
+
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+const XP={growth:15,face:12,sport:10,hygiene:5};
+function mkItem(id,cat,title,desc,priority){
+  return{id,cat,title,desc,priority:priority||false,xp:XP[cat]||10};
+}
+
+const MATIN_HYG=[
+  mkItem("mh1","hygiene","Verre d'eau au réveil","Avant tout le reste. 250ml minimum bu immédiatement. Réhydrate les disques intervertébraux après 8h — mesurés, ils perdent ~1cm la nuit."),
+  mkItem("mh2","hygiene","Se laver le visage","Eau froide uniquement le matin (pas de nettoyant). Rincer, sécher en tapotant. Le nettoyant le matin aggrave le sébum — réservé au soir."),
+  mkItem("mh3","hygiene","Brosser les dents","2 min, mouvements circulaires. Inclure la langue. Attendre 30 min si tu as bu un jus acide."),
+  mkItem("mh4","hygiene","Déodorant","Sur peau sèche après lavage."),
+];
+const MATIN_GROWTH=[
+  mkItem("mg1","growth","Téléphone hors chambre la veille ✓","Vérifier que c'était bien fait. La GH est sécrétée entre 23h et 3h — toute perturbation de ce créneau réduit le pic.","high"),
+  mkItem("mg2","face","Drainage cervical","Pouces le long du SCM (oreille → clavicule) × 10. Puis sous la mâchoire × 8. Puis sous les pommettes × 8. Toujours cet ordre — ouvrir la sortie avant d'envoyer le fluide.","high"),
+  mkItem("mg3","face","Relâche masséter","Pouces sur l'angle de la mâchoire, cercles remontants 30s. Puis milieu joue : enfoncer + ouvrir grand la bouche 8×. Libère le bruxisme nocturne."),
+  mkItem("mg4","face","Stretch lingual","Tissu propre, tirer la langue. Gauche/droite 5× chaque. Haut/bas 3s maintenu. Fascia spiral de la langue — tendu = mewing impossible."),
+  mkItem("mg5","face","Thumb pulling — matin","Dos au mur, menton rentré. Pouces bords extérieurs du palais, pression haut + extérieur. 5–6 × 10s. 3 zones : arrière → milieu → avant. Sutures actives jusqu'à ~25 ans.","high"),
+  mkItem("mg6","growth","Petit-déjeuner ★ CRITIQUE","Fromage blanc 200g + flocons 50g + poignée noix = 35g protéines en 4 min. Sans petit-déj = catabolisme 16h. À 62kg tu dois MANGER — tu es en phase de croissance.","high"),
+];
+const JOURNEE=[
+  mkItem("j1","growth","Eau — viser 2.5L aujourd'hui","1 bouteille le matin, 1 l'après-midi. Les disques intervertébraux sont composés à 80% d'eau — déshydratation = compression mesurable.","high"),
+  mkItem("j2","face","Mewing toute la journée","Langue entière contre le palais (tiers postérieur). Avaler la salive pour trouver la position. Alarme toutes les 2h.","high"),
+  mkItem("j3","face","Respiration nasale exclusive","Bouche fermée en permanence. Respiration buccale = palais étroit, hyoïde bas, moins d'oxyde nitrique. Si difficile la nuit : Myotape."),
+  mkItem("j4","face","Déglutition correcte","Langue vers palais (pas vers les dents). Visage neutre en avalant. Seuls les muscles du cou bougent."),
+  mkItem("j5","face","Mastication bilatérale aux repas","20–30 masticatoires/bouchée, les deux côtés. Aliments durs prioritaires."),
+  mkItem("j6","growth","Posture cervicale correcte","Oreilles au-dessus des épaules. Tête en avant = hyoïde descend + perte de taille mesurable. Check toutes les heures.","high"),
+  mkItem("j7","hygiene","Changer les sous-vêtements","Base quotidienne."),
+];
+const SOIR_HYG=[
+  mkItem("sh1","hygiene","Douche — eau tiède + 30s froide finale","La fin froide resserre les pores, réduit l'inflammation cutanée, améliore la circulation. Shampooing max 3×/semaine."),
+  mkItem("sh2","hygiene","Nettoyant visage (soir) ★","LE nettoyage clé. 8h de sébum + pollution + bactéries. Nettoyant doux, jamais dormir sans. Pour toi : La Roche-Posay Toleriane Gel ou CeraVe Hydrating Cleanser."),
+  mkItem("sh3","hygiene","Hydratant visage","Appliquer sur peau légèrement humide après nettoyage. Peau grasse déshydratée produit plus de sébum. CeraVe PM ou Neutrogena Hydro Boost."),
+  mkItem("sh4","hygiene","Brosser les dents + fil dentaire","Brossage du soir = le plus critique. 8h de prolifération sinon. Fil dentaire 1×/jour."),
+];
+const SOIR_GROWTH=[
+  mkItem("sg1","face","Hyoid swallow ★","Tête légèrement en arrière (20–30°). Avaler salive + hard mewing simultané. Sentir la tension sous la mâchoire. 3 × 15 reps. Le meilleur exercice suprahyoïdien existant.","high"),
+  mkItem("sg2","face","Jaw opening résisté","Poing sous le menton. Ouvrir bouche contre résistance (3s ouvrir, 3s fermer). 3 × 12 reps."),
+  mkItem("sg3","face","Thumb pulling — soir","Même protocole que le matin. 2 sessions/jour = facteur décisif pour les sutures palatines.","high"),
+  mkItem("sg4","growth","Bar hang décompression ★","Suspension complète, jambes croisées, corps relâché. Pas de Valsalva. 3 × 30–45s. Puis 10 squat jumps immédiatement pour recomprimer et faire retenir l'eau aux disques.","high"),
+  mkItem("sg5","growth","Chin tucks soir","Rentrer le menton en allongeant la nuque vers le haut. 5s maintenu. 2 × 15."),
+];
+const COUCHER=[
+  mkItem("c1","growth","TÉLÉPHONE HORS CHAMBRE ★★★","MODE AVION. Hors de la chambre physiquement. 70% de la GH sécrétée entre 23h et 3h. C'est le levier n°1 de ta croissance. C'est non-négociable.","high"),
+  mkItem("c2","growth","Couché avant 23h → 8h30 min","Pendant la puberté : 8h30 minimum. Rythme fixe même le week-end — l'irrégularité casse le pic de GH. Chambre froide (18°C) et sombre.","high"),
+  mkItem("c3","hygiene","Taie d'oreiller propre (2×/sem)","8h de contact. Sébum + bactéries = acné. Retourner les jours sans changement."),
+];
+const TOUJOURS=[
+  mkItem("t1","growth","Protéines ≥ 125g aujourd'hui","À 62kg en croissance : 125g minimum. Fromage blanc + œufs + viande/poisson = base. Sans ça, le sport ne construit rien.","high"),
+  mkItem("t2","growth","Calcium + D3 + K2","Calcium : laitages, sardines. D3 : soleil ou complément en hiver. K2 : beurre, jaunes d'œufs, fromages affinés. Trio des plaques de croissance."),
+  mkItem("t3","hygiene","Ongles propres et courts","Détail social très remarqué."),
+];
+const HEBDO=[
+  mkItem("h1","face","Drainage complet (2–3×/sem)","Ordre : cou → sous mâchoire → milieu joue (bouche ouverte) → sous menton → pommettes → masséter → bords nez → TMJ → retour cou. 10–12 min. Commencer et finir par le cou."),
+  mkItem("h2","face","Chewing gum Falim (2–3×/sem)","10–15 min max. Côté faible en priorité. Hypertrophie masséter = carré de mâchoire. Pas plus = risque TMJ."),
+  mkItem("h3","growth","Tractions excentriques lentes (2–3×/sem)","Descente 5–6s très lente, pause 3s bras tendus. 3–5 reps. Améliore la rétention d'eau des disques — effet cumulatif sur la taille debout."),
+  mkItem("h4","hygiene","Laver les draps (1×/sem)","Programme 60°C. Acné dorsale et irritations liées aux draps sales."),
+  mkItem("h5","hygiene","Couper les ongles si besoin (1×/sem)","Pieds à plat pour éviter les incarnés."),
+];
+
+const SPORT={
+  J1:{label:"Push + Core",emoji:"💪",exs:[
+    {n:"Pompes sur poings (coudes 45°)",s:"4 × 8–12",r:"90s",p:"→ 4×12 : pompes archer",d:"Poings à largeur d'épaules. Coudes 45° — ni collés ni écartés. Descente 3s lente, explosion. Cible pectoraux + triceps. Fist grip obligatoire (poignet)."},
+    {n:"Dips (buste penché en avant)",s:"4 × 6–10",r:"2 min",p:"→ 4×10 : lester bande",d:"Penché pour cibler les pecs. Descente 3s. Ne pas verrouiller les coudes en haut."},
+    {n:"Pike push-ups (poings)",s:"3 × 8–12",r:"90s",p:"→ 3×12 : pieds surélevés",d:"Corps en V inversé, tête vers le sol. Isole les deltoïdes. Descente jusqu'à frôler le sol."},
+    {n:"Hollow body hold",s:"4 × 20–40s",r:"60s",p:"→ 4×40s : hollow rocks",d:"Dos plaqué au sol. Jambes à 30–45°, bras tendus derrière. Si trop dur : genoux fléchis."},
+    {n:"Lever de jambes suspendu",s:"3 × 8–12",r:"90s",p:"Genoux → jambes tendues",d:"Montée lente, descente contrôlée 3s. Éviter le balancement."},
+  ]},
+  J2:{label:"Pull + Biceps",emoji:"🦾",exs:[
+    {n:"Tractions pronation (full ROM)",s:"4 × 5–8",r:"2 min",p:"→ 4×8 : lest",d:"Bras ENTIÈREMENT tendus en bas à chaque rep. Descente 3s. C'est le mouvement roi pour toi — décompresse aussi la colonne."},
+    {n:"Tractions supination",s:"3 × 5–8",r:"2 min",p:"Même logique",d:"Prise supine, coudes près du corps. Biceps + bas des dorsaux. Descente 3s."},
+    {n:"Australian pull-ups",s:"3 × 10–15",r:"90s",p:"→ pieds surélevés",d:"Barre à hauteur poitrine, corps incliné. Régler la difficulté par l'inclinaison."},
+    {n:"Curl haltère alterné (10kg)",s:"3 × 8–12",r:"90s",p:"→ 3×12 : tempo 4s",d:"Buste fixe, coudes collés. Supination complète en haut. Descente 3s."},
+    {n:"Face pulls bande",s:"3 × 15–20",r:"60s",p:"Bande plus résistante",d:"Bande à hauteur des yeux. Coudes hauts, mains qui s'écartent. Santé des épaules."},
+  ]},
+  J3:{label:"Jambes + Core",emoji:"🦵",exs:[
+    {n:"Squat bulgare",s:"4 × 8–12",r:"2 min",p:"Corps → 5kg → 10kg",d:"Pied arrière sur chaise, pied avant loin. Descente 3s. Le stimulus de compression des jambes favorise la GH — bonne complémentarité avec les tractions."},
+    {n:"Hip thrust (épaules sur canapé)",s:"4 × 12–15",r:"90s",p:"Lest progressif",d:"Alignement hanche-genou-épaule en haut. Serrer fessiers 1s. Descente 2s."},
+    {n:"Nordic curl négatif (4–5s)",s:"3 × 4–6",r:"2 min",p:"→ remontée complète",d:"Pieds bloqués sous meuble. Se laisser tomber très lentement. Mains pour remonter. Ischio en excentrique."},
+    {n:"Mollets sur marche",s:"4 × 15–20",r:"60s",p:"Bilatéral → unilatéral",d:"Descente complète sous le niveau de la marche, montée explosive. Full ROM."},
+    {n:"Ab wheel / planche dynamique",s:"3 × 8–12",r:"90s",p:"Genoux → debout",d:"Gainage anti-rotation. Core fort = meilleure posture = taille mesurable améliorée."},
+  ]},
+  J4:{label:"Push — Volume",emoji:"🔥",exs:[
+    {n:"Pompes diamant (poings)",s:"4 × 8–12",r:"90s",p:"→ pieds surélevés",d:"Poings rapprochés sous le sternum. Coudes longeant le corps. Triceps + pec interne."},
+    {n:"Pompes larges (poings)",s:"3 × 10–15",r:"90s",p:"Volume pur",d:"Poings écartés. Descente 3s. Pectoraux externes. Pas de lest — accumulation de volume."},
+    {n:"Dips lestés (bande)",s:"4 × 6–8",r:"2 min",p:"Lest progressif",d:"Meilleur levier de progression en force poussée en callisthénie."},
+    {n:"Lateral raise haltères (5kg)",s:"3 × 12–15",r:"60s",p:"5kg → 10kg",d:"Légèrement penché. Montée jusqu'à l'horizontal. Descente 3s. Si tu te balances = trop lourd."},
+    {n:"Triceps overhead haltère (10kg)",s:"3 × 10–12",r:"90s",p:"→ 3×12 puis charge",d:"Coudes fixes pointant vers le haut. Extension complète. Descente 3s."},
+  ]},
+  J5:{label:"Pull + Neck",emoji:"🦅",exs:[
+    {n:"Tractions neutres",s:"4 × 6–10",r:"2 min",p:"Lest progressif",d:"Prise neutre. Brachial + dorsaux. Full ROM. Descente 3s."},
+    {n:"Australian pull-ups larges",s:"4 × 10–15",r:"90s",p:"→ pieds plus hauts",d:"Prise très large. Corps horizontal. Crée le V-taper — silhouette visuellement plus grande."},
+    {n:"Rowing haltère unilatéral (10kg)",s:"3 × 10–12",r:"90s",p:"Technique d'abord",d:"Dos plat. Tirer le coude vers le plafond. ROM complet."},
+    {n:"Chin tucks + neck curl allongé",s:"3 × 15–20",r:"60s",p:"→ résistance main",d:"Allongé : rentrer le menton, soulever la tête. Descente 3s. Fléchisseurs profonds du cou = position de l'hyoïde."},
+    {n:"Shrugs haltères (10kg)",s:"3 × 12–15",r:"60s",p:"Lest progressif",d:"Contraction 2s en haut, descente 3s. Équilibre visuel cou/épaules."},
+  ]},
+  J6:{label:"Full Body — Intensité",emoji:"⚡",exs:[
+    {n:"Tractions pronation MAX ← note le chiffre",s:"3 × max",r:"3 min",p:"Benchmark hebdo",d:"Max reps full ROM strict. Note les 3 séries. Si ça monte semaine à semaine = le programme fonctionne."},
+    {n:"Dips MAX ← note le chiffre",s:"3 × max",r:"3 min",p:"Benchmark hebdo",d:"Full ROM, pas de rebond. Note les chiffres chaque semaine."},
+    {n:"Squat sauté (descente 3s)",s:"4 × 10",r:"90s",p:"→ lest haltères",d:"Explosion maximale. Puissance = différent de la force. Stimulus GH élevé."},
+    {n:"Pompes explosives (poings)",s:"3 × 6–8",r:"2 min",p:"→ applaudissement",d:"Descente 2s, poussée explosive. Atterrissage souple."},
+    {n:"L-sit suspendu",s:"4 × max",r:"90s",p:"Genoux → tendus",d:"Core + fléchisseurs + épaules. Commencer genoux fléchis."},
+  ]},
+  J7:{label:"Repos actif",emoji:"🌿",exs:[
+    {n:"Marche 20–30 min",s:"—",r:"—",p:"Récupération active",d:"Active la circulation sans fatigue. Accélère la récupération musculaire."},
+    {n:"Étirements statiques",s:"30–60s chaque",r:"—",p:"Pecs, dorsaux, ischio",d:"Maintenir sans forcer. Jamais sur muscle froid."},
+    {n:"Mewing conscient renforcé",s:"10 min",r:"—",p:"",d:"Ancrer les habitudes pendant le repos."},
+    {n:"Chin tucks légers",s:"2 × 15",r:"—",p:"",d:"Maintien minimal. Jour de repos."},
+  ]},
+};
+
+const DAYS_FR=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+const DAYS_SHORT=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+const SK=["J1","J2","J3","J4","J5","J6","J7"];
+const HEBDO_DAYS=[2,4,6];
+const JS2I={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
+
+function todayI(){return JS2I[new Date().getDay()];}
+function dayDate(di){const diff=di-todayI();const d=new Date();d.setDate(d.getDate()+diff);return d.toISOString().slice(0,10);}
+function ikey(di,id){return dayDate(di)+"_"+id;}
+
+// ── STATE ──
+let ST={};
+try{ST=JSON.parse(localStorage.getItem("asc_v1")||"{}");}catch{}
+function save(){try{localStorage.setItem("asc_v1",JSON.stringify(ST));}catch{}}
+function isChk(di,id){return !!ST[ikey(di,id)];}
+
+function toggleChk(di,id,xpVal,ev){
+  const k=ikey(di,id);const kx=ikey(di,id+"_xp");
+  ST[k]=!ST[k];
+  if(ST[k]){ST[kx]=xpVal;if(ev)showXPPopup(ev,xpVal);}
+  else{delete ST[kx];}
+  save();updateGlobalXP();renderDay(di);renderTabs();updateHeader();
+}
+
+// ── XP CALC ──
+function calcTotalXP(){
+  let total=0;
+  for(const k of Object.keys(ST)){if(k.endsWith("_xp"))total+=ST[k]||0;}
+  return total;
+}
+function calcTodayXP(){
+  const di=todayI();let total=0;
+  const allItems=getAllItems(di);
+  for(const it of allItems){const k=ikey(di,it.id+"_xp");if(ST[k])total+=ST[k];}
+  const sk=SK[di];
+  SPORT[sk].exs.forEach((_,i)=>{const k=ikey(di,`e_${sk}_${i}_xp`);if(ST[k])total+=ST[k];});
+  return total;
+}
+function calcStreak(){
+  let streak=0;const today=todayI();
+  for(let offset=0;offset<30;offset++){
+    const di=(today-offset+7)%7;
+    const items=getAllItems(di);const sk=SK[di];
+    const total=items.length+SPORT[sk].exs.length;
+    if(total===0)break;
+    const done=items.filter(it=>isChk(di,it.id)).length+SPORT[sk].exs.filter((_,i)=>isChk(di,`e_${sk}_${i}`)).length;
+    if(done/total>=0.7)streak++;else break;
+  }
+  return streak;
+}
+function getAllItems(di){
+  const base=[...MATIN_HYG,...MATIN_GROWTH,...JOURNEE,...SOIR_HYG,...SOIR_GROWTH,...COUCHER,...TOUJOURS];
+  if(HEBDO_DAYS.includes(di))return[...base,...HEBDO];
+  return base;
+}
+function dayProg(di){
+  const items=getAllItems(di);const sk=SK[di];
+  const total=items.length+SPORT[sk].exs.length;
+  const done=items.filter(it=>isChk(di,it.id)).length+SPORT[sk].exs.filter((_,i)=>isChk(di,`e_${sk}_${i}`)).length;
+  const xpEarned=items.reduce((s,it)=>s+(ST[ikey(di,it.id+"_xp")]||0),0)+SPORT[sk].exs.reduce((s,_,i)=>s+(ST[ikey(di,`e_${sk}_${i}_xp`)]||0),0);
+  return{done,total,pct:total>0?Math.round(done/total*100):0,xpEarned};
+}
+
+// ── CAT PROGRESS ──
+function catProg(di){
+  // Items grouped by cat
+  const allItems=getAllItems(di);
+  const sk=SK[di];
+  const cats={growth:{done:0,total:0},face:{done:0,total:0},sport:{done:0,total:0},hygiene:{done:0,total:0}};
+  for(const it of allItems){
+    const c=cats[it.cat];if(!c)continue;
+    c.total++;
+    if(isChk(di,it.id))c.done++;
+  }
+  // sport exercises
+  SPORT[sk].exs.forEach((_,i)=>{
+    cats.sport.total++;
+    if(isChk(di,`e_${sk}_${i}`))cats.sport.done++;
+  });
+  return cats;
+}
+
+function catProgHTML(di){
+  const cp=catProg(di);
+  const defs=[
+    {key:"growth",label:"Croissance",color:"cpf-growth",textColor:"var(--growth)"},
+    {key:"face",label:"Visage",color:"cpf-face",textColor:"var(--face)"},
+    {key:"sport",label:"Sport",color:"cpf-sport",textColor:"var(--sport)"},
+    {key:"hygiene",label:"Hygiène",color:"cpf-hygiene",textColor:"#94a3b8"},
+  ];
+  return`<div class="cat-progress-grid">${defs.map(d=>{
+    const{done,total}=cp[d.key];
+    const pct=total>0?Math.round(done/total*100):0;
+    return`<div class="cat-prog-item">
+      <div class="cat-prog-top">
+        <span class="cat-prog-label" style="color:${d.textColor}">${d.label}</span>
+        <span class="cat-prog-pct">${pct}%</span>
+      </div>
+      <div class="cat-prog-bar"><div class="cat-prog-fill ${d.color}" style="width:${pct}%"></div></div>
+      <div class="cat-prog-done">${done} / ${total}</div>
+    </div>`;
+  }).join("")}</div>`;
+}
+
+// ── XP POPUP ──
+function showXPPopup(ev,xp){
+  const el=document.createElement("div");
+  el.className="xp-popup";el.textContent="+"+xp+" XP";
+  const touch=ev.touches?ev.touches[0]:ev;
+  el.style.left=(touch.clientX-20)+"px";el.style.top=(touch.clientY-30)+"px";
+  document.body.appendChild(el);setTimeout(()=>el.remove(),1200);
+}
+
+// ── RANK UP ──
+let lastRank=null;
+function checkRankUp(xp){
+  const r=getRank(xp);
+  if(lastRank&&r.name!==lastRank.name){
+    const flash=document.createElement("div");
+    flash.className="rank-flash";
+    flash.innerHTML=`<div class="rank-flash-inner"><div class="rank-flash-title">RANG ATTEINT</div><div class="rank-flash-name">${r.emoji} ${r.name}</div></div>`;
+    document.body.appendChild(flash);setTimeout(()=>flash.remove(),2500);
+  }
+  lastRank=r;
+}
+
+// ── HEADER ──
+function updateHeader(){
+  const xp=calcTotalXP();
+  const rank=getRank(xp);const next=getNextRank(xp);
+  const level=getLevel(xp);
+  const streak=calcStreak();
+  const{pct}=dayProg(todayI());
+  document.getElementById("rank-label").textContent="RANG : "+rank.name.toUpperCase();
+  document.getElementById("rank-label").style.color=rank.color||"var(--gold)";
+  if(next){
+    const prog=xp-rank.minXP;const needed=next.minXP-rank.minXP;
+    const pctBar=Math.round(prog/needed*100);
+    document.getElementById("xp-label").textContent=xp+" / "+next.minXP+" XP";
+    document.getElementById("xp-bar-fill").style.width=pctBar+"%";
+    document.getElementById("xp-bar-glow").style.width=pctBar+"%";
+  } else {
+    document.getElementById("xp-label").textContent=xp+" XP — MAX";
+    document.getElementById("xp-bar-fill").style.width="100%";
+  }
+  document.getElementById("stat-total-xp").textContent=xp;
+  document.getElementById("stat-streak").textContent=streak+"🔥";
+  document.getElementById("stat-today-pct").textContent=pct+"%";
+  document.getElementById("stat-level").textContent="Nv."+level;
+  checkRankUp(xp);
+}
+function updateGlobalXP(){updateHeader();}
+
+// ── HTML BUILDERS ──
+function catTag(cat){
+  const labels={growth:"Croissance",face:"Visage",sport:"Sport",hygiene:"Hygiène"};
+  return`<span class="icat cat-${cat}">${labels[cat]||cat}</span>`;
+}
+function itemHTML(it,di){
+  const done=isChk(di,it.id);
+  const EXP_STATE=window["exp_"+di+"_"+it.id]||false;
+  return`<div class="item${done?" done":""}${it.priority?" priority-high":""}${EXP_STATE?" expanded":""}" id="I_${di}_${it.id}">
+    <div class="item-top">
+      <div class="item-chk-zone" onclick="doToggle(event,${di},'${it.id}',${it.xp})">
+        <div class="chk"></div>
+        <span class="ititle">${it.title}</span>
+      </div>
+      <div class="item-right">
+        ${catTag(it.cat)}
+        <span class="ixp">+${it.xp}</span>
+        <span class="iexp" onclick="togExp(${di},'${it.id}')">▾</span>
+      </div>
+    </div>
+    ${it.desc?`<div class="idesc">${it.desc}</div>`:""}
+  </div>`;
+}
+function sportHTML(di){
+  const sk=SK[di];const sp=SPORT[sk];
+  const allDone=sp.exs.every((_,i)=>isChk(di,`e_${sk}_${i}`));
+  const isOpen=window["sport_open_"+di]||false;
+  const rows=sp.exs.map((ex,i)=>{
+    const id=`e_${sk}_${i}`;const done=isChk(di,id);
+    const exExp=window["exexp_"+di+"_"+sk+"_"+i]||false;
+    return`<div class="ex${done?" done":""}${exExp?" expanded":""}" id="EX_${di}_${sk}_${i}">
+      <div class="ex-top">
+        <div class="ex-chk-z" onclick="doToggleEx(event,${di},'${sk}',${i})">
+          <div class="exchk"></div>
+          <div class="exbody">
+            <div class="exname">${ex.n}</div>
+            <div class="exmeta">
+              <span class="exsets">${ex.s}</span>
+              ${ex.r!=="—"?`<span class="exrest">repos ${ex.r}</span>`:""}
+              ${ex.p?`<span class="exprog">${ex.p}</span>`:""}
+            </div>
+          </div>
+        </div>
+        ${ex.d?`<span class="ex-exp-btn" onclick="togExExp(${di},'${sk}',${i})">▾</span>`:""}
+      </div>
+      ${ex.d?`<div class="exdetail">${ex.d}</div>`:""}
+    </div>`;
+  }).join("");
+  return`<div class="sport-card${allDone?" all-done":""}${isOpen?" open":""}" id="SC_${di}">
+    <div class="sport-hdr" onclick="togSport(${di})">
+      <div class="chk" style="${allDone?"background:var(--green);border-color:var(--green)":""}"></div>
+      <div style="flex:1">
+        <div style="font-size:15px;font-weight:700;color:${allDone?"var(--muted)":"var(--text)"}">${sp.emoji} Séance — ${sp.label}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;font-family:'Share Tech Mono',monospace">${sp.exs.length} exercices · +${sp.exs.length*XP.sport} XP</div>
+      </div>
+      <span class="icat cat-sport">Sport</span>
+      <span class="sport-arr">▾</span>
+    </div>
+    <div class="sport-bdy">${rows}</div>
+  </div>`;
+}
+function sec(title,icon,time,xpMax,dot,html){
+  return`<div class="sec">
+    <div class="sec-header">
+      <span class="sec-icon">${icon}</span>
+      <span class="sec-title">${title}</span>
+      ${xpMax?`<span class="sec-xp">+${xpMax}XP max</span>`:""}
+      ${time?`<span class="sec-time">${time}</span>`:""}
+    </div>
+    <div class="items">${html}</div>
+  </div>`;
+}
+function renderDay(di){
+  const el=document.getElementById("P_"+di);if(!el)return;
+  const sk=SK[di];const{done,total,pct,xpEarned}=dayProg(di);
+  const isT=di===todayI();
+  const maxXP=getAllItems(di).reduce((s,it)=>s+it.xp,0)+SPORT[sk].exs.length*XP.sport;
+  el.innerHTML=`
+    <div class="day-hero">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="day-name">${DAYS_FR[di]}</div>
+          <div class="day-sub">${sk} · ${SPORT[sk].label} · ${SPORT[sk].emoji}</div>
+        </div>
+        ${isT?'<span class="badge-today">Aujourd\'hui</span>':""}
+      </div>
+    </div>
+    <div class="day-prog">
+      <div class="day-prog-row">
+        <span class="day-prog-title">Progression globale</span>
+        <span class="day-prog-nums">${done} / ${total}</span>
+      </div>
+      <div class="day-prog-bar"><div class="day-prog-fill" style="width:${pct}%"></div></div>
+      <div class="day-xp-earn">⚡ ${xpEarned} / ${maxXP} XP gagnés aujourd'hui</div>
+      ${pct===100?'<div class="day-complete">⭐ JOURNÉE COMPLÈTE ⭐</div>':""}
+      ${catProgHTML(di)}
+    </div>
+    ${sec("Matin — Hygiène","🧼","",MATIN_HYG.reduce((s,it)=>s+it.xp,0),"var(--hygiene)",MATIN_HYG.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Matin — Croissance & Visage","🌅","~15 min",MATIN_GROWTH.reduce((s,it)=>s+it.xp,0),"var(--growth)",MATIN_GROWTH.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Sport","💪",sk==="J7"?"~20 min":"~35–45 min",SPORT[sk].exs.length*XP.sport,"var(--sport)",sportHTML(di))}
+    ${sec("Journée — Habitudes clés","⚡","",JOURNEE.reduce((s,it)=>s+it.xp,0),"var(--growth)",JOURNEE.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Soir — Hygiène","🚿","",SOIR_HYG.reduce((s,it)=>s+it.xp,0),"var(--hygiene)",SOIR_HYG.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Soir — Protocole Croissance & Visage","🌙","~15 min",SOIR_GROWTH.reduce((s,it)=>s+it.xp,0),"var(--growth)",SOIR_GROWTH.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Coucher","😴","23h max",COUCHER.reduce((s,it)=>s+it.xp,0),"var(--sleep)",COUCHER.map(it=>itemHTML(it,di)).join(""))}
+    ${HEBDO_DAYS.includes(di)?sec("Hebdomadaire (ce jour)","📅","~12 min",HEBDO.reduce((s,it)=>s+it.xp,0),"var(--face)",HEBDO.map(it=>itemHTML(it,di)).join("")):""}
+    ${sec("Piliers permanents","🔑","",TOUJOURS.reduce((s,it)=>s+it.xp,0),"var(--always)",TOUJOURS.map(it=>itemHTML(it,di)).join(""))}
+  `;
+}
+
+// ── HOME PAGE ──
+function renderHome(){
+  const el=document.getElementById("P_home");if(!el)return;
+  const xp=calcTotalXP();const rank=getRank(xp);const next=getNextRank(xp);
+  const streak=calcStreak();const level=getLevel(xp);
+  const todayXP=calcTodayXP();
+  el.innerHTML=`
+    <div id="home-hero">
+      <div id="home-rank-circle">
+        <div id="home-rank-emoji">${rank.emoji}</div>
+        <div id="home-rank-name">${rank.name}</div>
+      </div>
+      <div id="home-xp-big">XP TOTAL</div>
+      <div id="home-total-xp">${xp}</div>
+      <div id="home-streak">🔥 ${streak} jours de streak · Niveau ${level}</div>
+    </div>
+    <div class="home-stats">
+      <div class="home-stat-card">
+        <div class="home-stat-icon">📈</div>
+        <div class="home-stat-val" style="color:var(--gold)">${xp}</div>
+        <div class="home-stat-lbl">XP Total</div>
+      </div>
+      <div class="home-stat-card">
+        <div class="home-stat-icon">🔥</div>
+        <div class="home-stat-val" style="color:var(--orange)">${streak}</div>
+        <div class="home-stat-lbl">Jours streak</div>
+      </div>
+      <div class="home-stat-card">
+        <div class="home-stat-icon">⚡</div>
+        <div class="home-stat-val" style="color:var(--cyan)">${todayXP}</div>
+        <div class="home-stat-lbl">XP aujourd'hui</div>
+      </div>
+      <div class="home-stat-card">
+        <div class="home-stat-icon">🏆</div>
+        <div class="home-stat-val" style="color:var(--purple)">${level}</div>
+        <div class="home-stat-lbl">Niveau</div>
+      </div>
+    </div>
+    <button class="today-btn" onclick="switchDay(${todayI()})">→ ALLER À AUJOURD'HUI</button>
+    ${next?`<div style="font-size:12px;color:var(--muted2);text-align:center;margin-bottom:16px;font-family:'Share Tech Mono',monospace">Prochain rang : ${next.emoji} ${next.name} à ${next.minXP} XP · encore ${next.minXP-xp} XP</div>`:"<div style='text-align:center;color:var(--gold);font-size:13px;margin-bottom:16px'>RANG MAXIMUM ATTEINT 👑</div>"}
+    <div class="ranks-section">
+      <div class="ranks-title">TABLEAU DES RANGS</div>
+      ${RANKS.map(r=>`<div class="rank-row${r.name===rank.name?" current-rank":""}">
+        <span class="rank-emoji">${r.emoji}</span>
+        <div class="rank-info">
+          <div class="rank-name" style="color:${r.color}">${r.name}</div>
+          <div class="rank-req">${r.minXP} XP requis</div>
+        </div>
+        ${xp>=r.minXP?'<span class="rank-check">✓</span>':""}
+      </div>`).join("")}
+    </div>
+  `;
+}
+
+// ── TOGGLE FUNCTIONS ──
+function doToggle(ev,di,id,xpVal){ev.stopPropagation();toggleChk(di,id,xpVal,ev);}
+function doToggleEx(ev,di,sk,i){ev.stopPropagation();const id=`e_${sk}_${i}`;toggleChk(di,id,XP.sport,ev);}
+function togExp(di,id){const k="exp_"+di+"_"+id;window[k]=!window[k];const el=document.getElementById("I_"+di+"_"+id);if(el)el.classList.toggle("expanded",window[k]);}
+function togExExp(di,sk,i){const k="exexp_"+di+"_"+sk+"_"+i;window[k]=!window[k];const el=document.getElementById("EX_"+di+"_"+sk+"_"+i);if(el)el.classList.toggle("expanded",window[k]);}
+function togSport(di){window["sport_open_"+di]=!window["sport_open_"+di];renderDay(di);}
+
+// ── TABS ──
+let activeTab="home";
+function renderTabs(){
+  const dayTabs=DAYS_SHORT.map((n,i)=>{
+    const{pct}=dayProg(i);const isT=i===todayI();const sk=SK[i];
+    return`<div class="tab${activeTab===String(i)?" active":""}${isT?" today":""}" onclick="switchDay(${i})">
+      <span class="tab-icon">${SPORT[sk].emoji}</span>
+      <span class="tab-lbl">${n}${isT?'<span style="color:var(--cyan)">·</span>':""}</span>
+      <span class="tab-xp">${pct}%</span>
+    </div>`;
+  }).join("");
+  document.getElementById("tabs").innerHTML=
+    `<div class="tab${activeTab==="home"?" active":""}" onclick="switchHome()">
+      <span class="tab-icon">🏠</span><span class="tab-lbl">Accueil</span><span class="tab-xp">XP</span>
+    </div>`+dayTabs;
+}
+function switchDay(i){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("P_"+i).classList.add("active");
+  activeTab=String(i);renderTabs();
+  document.querySelectorAll(".tab")[i+1]?.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});
+}
+function switchHome(){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("P_home").classList.add("active");
+  activeTab="home";renderHome();renderTabs();
+}
+
+// ── INIT ──
+window.onload=function(){
+  const d=new Date();
+  const mo=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+  document.getElementById("date-display").textContent=DAYS_FR[todayI()]+" "+d.getDate()+" "+mo[d.getMonth()];
+  const pg=document.getElementById("pages");
+  const home=document.createElement("div");
+  home.className="page active";home.id="P_home";pg.appendChild(home);
+  for(let i=0;i<7;i++){
+    const div=document.createElement("div");
+    div.className="page";div.id="P_"+i;pg.appendChild(div);renderDay(i);
+  }
+  renderHome();renderTabs();updateHeader();
+  lastRank=getRank(calcTotalXP());
+};
+</script>
+</body>
+</html>
