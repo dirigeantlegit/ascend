@@ -1,6 +1,6 @@
 // ASCEND Protocol — Service Worker
 // Version du cache — change ce numéro à chaque mise à jour du contenu
-const CACHE_NAME = 'ascend-v1';
+const CACHE_NAME = 'ascend-v2';
 
 // Fichiers à mettre en cache pour le mode offline
 const FILES_TO_CACHE = [
