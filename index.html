@@ -9,7 +9,6 @@
 <meta name="apple-mobile-web-app-title" content="ASCEND">
 <meta name="theme-color" content="#060810">
 <link rel="manifest" href="manifest.json">
-<!-- iOS PWA icons (à créer, voir instructions) -->
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>ASCEND Protocol</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -34,8 +33,6 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 #header-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 6px}
 #logo{font-size:16px;font-weight:700;letter-spacing:4px;text-transform:uppercase;background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 #date-display{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted2)}
-
-/* XP BAR */
 #xp-section{padding:6px 16px 10px}
 #xp-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
 #rank-label{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--gold)}
@@ -44,8 +41,6 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 #xp-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width 0.6s cubic-bezier(.4,0,.2,1);position:relative}
 #xp-bar-fill::after{content:'';position:absolute;right:0;top:0;width:8px;height:100%;background:rgba(255,255,255,0.6);filter:blur(3px)}
 #xp-bar-glow{position:absolute;top:-2px;height:9px;border-radius:4px;background:linear-gradient(90deg,transparent,rgba(6,182,212,0.3));pointer-events:none;transition:width 0.6s cubic-bezier(.4,0,.2,1)}
-
-/* STATS ROW */
 #stats-row{display:flex;gap:1px;background:var(--border);border-top:1px solid var(--border)}
 .stat-box{flex:1;background:var(--bg2);padding:10px 6px;text-align:center}
 .stat-val{font-family:'Share Tech Mono',monospace;font-size:17px;font-weight:700;line-height:1}
@@ -72,7 +67,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .day-sub{font-size:14px;color:var(--muted2);margin-top:4px;font-family:'Share Tech Mono',monospace}
 .badge-today{font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:2px;background:rgba(6,182,212,0.15);color:var(--cyan);border:1px solid rgba(6,182,212,0.3);text-transform:uppercase}
 
-/* DAY PROGRESS GLOBAL */
+/* DAY PROGRESS */
 .day-prog{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden}
 .day-prog::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,0.04),transparent);pointer-events:none}
 .day-prog-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
@@ -84,7 +79,7 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .day-complete{text-align:center;padding:8px 0 2px;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
 
-/* ── CAT PROGRESS BARS ── */
+/* CAT PROGRESS */
 .cat-progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .cat-prog-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
 .cat-prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
@@ -184,8 +179,6 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .home-stat-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .today-btn{display:block;width:100%;padding:16px;background:linear-gradient(90deg,rgba(59,130,246,0.2),rgba(6,182,212,0.2));border:1px solid rgba(6,182,212,0.4);border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);cursor:pointer;text-align:center;margin-bottom:14px;transition:all 0.2s}
 .today-btn:active{background:rgba(6,182,212,0.2);transform:scale(0.98)}
-
-/* RANKS TABLE */
 .ranks-section{margin-top:22px}
 .ranks-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);margin-bottom:12px}
 .rank-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:7px;margin-bottom:5px}
@@ -196,13 +189,58 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 .rank-req{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted)}
 .rank-check{color:var(--gold);font-size:16px}
 
-/* MISC */
+/* ── BUDGET PAGE ── */
+.budget-hero{padding:18px 0 20px}
+.budget-hero-title{font-size:28px;font-weight:700;letter-spacing:-0.5px}
+.budget-hero-sub{font-size:13px;color:var(--muted2);margin-top:4px;font-family:'Share Tech Mono',monospace}
+
+.budget-overview{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.bov-card{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:14px 10px;text-align:center}
+.bov-val{font-family:'Share Tech Mono',monospace;font-size:20px;font-weight:700;line-height:1}
+.bov-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+.budget-bar-wrap{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:14px 16px;margin-bottom:16px}
+.budget-bar-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.budget-bar-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted2)}
+.budget-bar-pct{font-family:'Share Tech Mono',monospace;font-size:13px}
+.budget-bar{height:10px;background:var(--border2);border-radius:5px;overflow:hidden}
+.budget-bar-fill{height:100%;border-radius:5px;transition:width 0.5s ease}
+
+.bsec{margin-bottom:20px}
+.bsec-title{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+.bitem{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:6px;transition:all 0.2s}
+.bitem.bought{background:#0a1a12;border-color:#1a3a28}
+.bitem-top{display:flex;align-items:center;padding:13px 14px;gap:12px;cursor:pointer}
+.bchk{width:26px;height:26px;border-radius:6px;flex-shrink:0;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all 0.2s;position:relative}
+.bitem.bought .bchk{background:var(--green);border-color:var(--green)}
+.bchk::after{content:'✓';display:none;color:#000;font-size:15px;font-weight:900;line-height:1}
+.bitem.bought .bchk::after{display:block}
+.bitem-info{flex:1;min-width:0}
+.bitem-name{font-size:15px;font-weight:600;line-height:1.3}
+.bitem.bought .bitem-name{text-decoration:line-through;color:var(--muted)}
+.bitem-where{font-size:11px;color:var(--muted2);margin-top:2px}
+.bitem-price{font-family:'Share Tech Mono',monospace;font-size:14px;font-weight:700;flex-shrink:0}
+.bitem-priority{font-size:9px;font-weight:700;letter-spacing:1.5px;padding:3px 7px;border-radius:2px;flex-shrink:0}
+.bp-essentiel{background:rgba(6,182,212,0.12);color:var(--cyan);border:1px solid rgba(6,182,212,0.25)}
+.bp-utile{background:rgba(245,200,66,0.1);color:var(--gold);border:1px solid rgba(245,200,66,0.2)}
+.bp-optionnel{background:rgba(74,85,128,0.2);color:var(--muted2);border:1px solid var(--border)}
+.bitem-detail{display:none;padding:0 14px 14px 52px;font-size:13px;color:var(--muted2);line-height:1.7}
+.bitem.expanded .bitem-detail{display:block}
+.bitem-exp{font-size:15px;color:var(--muted);transition:transform 0.2s;flex-shrink:0;padding:4px}
+.bitem.expanded .bitem-exp{transform:rotate(180deg)}
+
+.budget-note{background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.2);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--muted2);line-height:1.7}
+.budget-note strong{color:var(--gold)}
+
+/* CAT BADGES */
 .cat-growth{background:rgba(6,182,212,0.12);color:var(--growth);border:1px solid rgba(6,182,212,0.25)}
 .cat-face{background:rgba(167,139,250,0.12);color:var(--face);border:1px solid rgba(167,139,250,0.25)}
 .cat-sport{background:rgba(16,185,129,0.12);color:var(--sport);border:1px solid rgba(16,185,129,0.25)}
 .cat-hygiene{background:rgba(100,116,139,0.12);color:#94a3b8;border:1px solid rgba(100,116,139,0.25)}
+.cat-nutrition{background:rgba(249,115,22,0.12);color:var(--orange);border:1px solid rgba(249,115,22,0.25)}
 
-@media(max-width:400px){.day-name{font-size:28px}.tab-lbl{font-size:9px}.ititle{font-size:14px}}
+@media(max-width:400px){.day-name{font-size:28px}.tab-lbl{font-size:9px}.ititle{font-size:14px}.budget-hero-title{font-size:24px}}
 </style>
 </head>
 <body>
@@ -246,18 +284,11 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 <div id="pages"></div>
 
 <script>
-// ═══════════════════════════════════════════════════
-// PWA — Service Worker registration
-// ═══════════════════════════════════════════════════
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
-  });
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
 }
 
-// ═══════════════════════════════════════════════════
-// RANKS & XP
-// ═══════════════════════════════════════════════════
+// ═══════ RANKS ═══════
 const RANKS=[
   {name:"Dormant",     emoji:"💤", minXP:0,    color:"#64748b"},
   {name:"Éveillé",    emoji:"👁",  minXP:100,  color:"#94a3b8"},
@@ -272,123 +303,162 @@ function getRank(xp){let r=RANKS[0];for(const rank of RANKS)if(xp>=rank.minXP)r=
 function getNextRank(xp){for(const rank of RANKS)if(xp<rank.minXP)return rank;return null;}
 function getLevel(xp){return Math.floor(xp/100)+1;}
 
-// ═══════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════
-const XP={growth:15,face:12,sport:10,hygiene:5};
+// ═══════ XP VALUES ═══════
+const XP={growth:15,face:12,sport:10,hygiene:5,nutrition:12};
+
 function mkItem(id,cat,title,desc,priority){
   return{id,cat,title,desc,priority:priority||false,xp:XP[cat]||10};
 }
 
+// ═══════ MATIN HYGIÈNE ═══════
 const MATIN_HYG=[
   mkItem("mh1","hygiene","Verre d'eau au réveil","Avant tout le reste. 250ml minimum bu immédiatement. Réhydrate les disques intervertébraux après 8h — mesurés, ils perdent ~1cm la nuit."),
-  mkItem("mh2","hygiene","Se laver le visage","Eau froide uniquement le matin (pas de nettoyant). Rincer, sécher en tapotant. Le nettoyant le matin aggrave le sébum — réservé au soir."),
+  mkItem("mh2","hygiene","Visage — eau froide uniquement","Eau froide uniquement le matin (pas de nettoyant). Rincer, sécher en tapotant. Le nettoyant le matin aggrave le sébum — réservé au soir."),
   mkItem("mh3","hygiene","Brosser les dents","2 min, mouvements circulaires. Inclure la langue. Attendre 30 min si tu as bu un jus acide."),
   mkItem("mh4","hygiene","Déodorant","Sur peau sèche après lavage."),
 ];
+
+// ═══════ MATIN CROISSANCE & VISAGE ═══════
 const MATIN_GROWTH=[
-  mkItem("mg1","growth","Téléphone hors chambre la veille ✓","Vérifier que c'était bien fait. La GH est sécrétée entre 23h et 3h — toute perturbation de ce créneau réduit le pic.","high"),
-  mkItem("mg2","face","Drainage cervical","Pouces le long du SCM (oreille → clavicule) × 10. Puis sous la mâchoire × 8. Puis sous les pommettes × 8. Toujours cet ordre — ouvrir la sortie avant d'envoyer le fluide.","high"),
-  mkItem("mg3","face","Relâche masséter","Pouces sur l'angle de la mâchoire, cercles remontants 30s. Puis milieu joue : enfoncer + ouvrir grand la bouche 8×. Libère le bruxisme nocturne."),
-  mkItem("mg4","face","Stretch lingual","Tissu propre, tirer la langue. Gauche/droite 5× chaque. Haut/bas 3s maintenu. Fascia spiral de la langue — tendu = mewing impossible."),
-  mkItem("mg5","face","Thumb pulling — matin","Dos au mur, menton rentré. Pouces bords extérieurs du palais, pression haut + extérieur. 5–6 × 10s. 3 zones : arrière → milieu → avant. Sutures actives jusqu'à ~25 ans.","high"),
-  mkItem("mg6","growth","Petit-déjeuner ★ CRITIQUE","Fromage blanc 200g + flocons 50g + poignée noix = 35g protéines en 4 min. Sans petit-déj = catabolisme 16h. À 62kg tu dois MANGER — tu es en phase de croissance.","high"),
-];
-const JOURNEE=[
-  mkItem("j1","growth","Eau — viser 2.5L aujourd'hui","1 bouteille le matin, 1 l'après-midi. Les disques intervertébraux sont composés à 80% d'eau — déshydratation = compression mesurable.","high"),
-  mkItem("j2","face","Mewing toute la journée","Langue entière contre le palais (tiers postérieur). Avaler la salive pour trouver la position. Alarme toutes les 2h.","high"),
-  mkItem("j3","face","Respiration nasale exclusive","Bouche fermée en permanence. Respiration buccale = palais étroit, hyoïde bas, moins d'oxyde nitrique. Si difficile la nuit : Myotape."),
-  mkItem("j4","face","Déglutition correcte","Langue vers palais (pas vers les dents). Visage neutre en avalant. Seuls les muscles du cou bougent."),
-  mkItem("j5","face","Mastication bilatérale aux repas","20–30 masticatoires/bouchée, les deux côtés. Aliments durs prioritaires."),
-  mkItem("j6","growth","Posture cervicale correcte","Oreilles au-dessus des épaules. Tête en avant = hyoïde descend + perte de taille mesurable. Check toutes les heures.","high"),
-  mkItem("j7","hygiene","Changer les sous-vêtements","Base quotidienne."),
-];
-const SOIR_HYG=[
-  mkItem("sh1","hygiene","Douche — eau tiède + 30s froide finale","La fin froide resserre les pores, réduit l'inflammation cutanée, améliore la circulation. Shampooing max 3×/semaine."),
-  mkItem("sh2","hygiene","Nettoyant visage (soir) ★","LE nettoyage clé. 8h de sébum + pollution + bactéries. Nettoyant doux, jamais dormir sans. Pour toi : La Roche-Posay Toleriane Gel ou CeraVe Hydrating Cleanser."),
-  mkItem("sh3","hygiene","Hydratant visage","Appliquer sur peau légèrement humide après nettoyage. Peau grasse déshydratée produit plus de sébum. CeraVe PM ou Neutrogena Hydro Boost."),
-  mkItem("sh4","hygiene","Brosser les dents + fil dentaire","Brossage du soir = le plus critique. 8h de prolifération sinon. Fil dentaire 1×/jour."),
-];
-const SOIR_GROWTH=[
-  mkItem("sg1","face","Hyoid swallow ★","Tête légèrement en arrière (20–30°). Avaler salive + hard mewing simultané. Sentir la tension sous la mâchoire. 3 × 15 reps. Le meilleur exercice suprahyoïdien existant.","high"),
-  mkItem("sg2","face","Jaw opening résisté","Poing sous le menton. Ouvrir bouche contre résistance (3s ouvrir, 3s fermer). 3 × 12 reps."),
-  mkItem("sg3","face","Thumb pulling — soir","Même protocole que le matin. 2 sessions/jour = facteur décisif pour les sutures palatines.","high"),
-  mkItem("sg4","growth","Bar hang décompression ★","Suspension complète, jambes croisées, corps relâché. Pas de Valsalva. 3 × 30–45s. Puis 10 squat jumps immédiatement pour recomprimer et faire retenir l'eau aux disques.","high"),
-  mkItem("sg5","growth","Chin tucks soir","Rentrer le menton en allongeant la nuque vers le haut. 5s maintenu. 2 × 15."),
-];
-const COUCHER=[
-  mkItem("c1","growth","TÉLÉPHONE HORS CHAMBRE ★★★","MODE AVION. Hors de la chambre physiquement. 70% de la GH sécrétée entre 23h et 3h. C'est le levier n°1 de ta croissance. C'est non-négociable.","high"),
-  mkItem("c2","growth","Couché avant 23h → 8h30 min","Pendant la puberté : 8h30 minimum. Rythme fixe même le week-end — l'irrégularité casse le pic de GH. Chambre froide (18°C) et sombre.","high"),
-  mkItem("c3","hygiene","Taie d'oreiller propre (2×/sem)","8h de contact. Sébum + bactéries = acné. Retourner les jours sans changement."),
-];
-const TOUJOURS=[
-  mkItem("t1","growth","Protéines ≥ 125g aujourd'hui","À 62kg en croissance : 125g minimum. Fromage blanc + œufs + viande/poisson = base. Sans ça, le sport ne construit rien.","high"),
-  mkItem("t2","growth","Calcium + D3 + K2","Calcium : laitages, sardines. D3 : soleil ou complément en hiver. K2 : beurre, jaunes d'œufs, fromages affinés. Trio des plaques de croissance."),
-  mkItem("t3","hygiene","Ongles propres et courts","Détail social très remarqué."),
-];
-const HEBDO=[
-  mkItem("h1","face","Drainage complet (2–3×/sem)","Ordre : cou → sous mâchoire → milieu joue (bouche ouverte) → sous menton → pommettes → masséter → bords nez → TMJ → retour cou. 10–12 min. Commencer et finir par le cou."),
-  mkItem("h2","face","Chewing gum Falim (2–3×/sem)","10–15 min max. Côté faible en priorité. Hypertrophie masséter = carré de mâchoire. Pas plus = risque TMJ."),
-  mkItem("h3","growth","Tractions excentriques lentes (2–3×/sem)","Descente 5–6s très lente, pause 3s bras tendus. 3–5 reps. Améliore la rétention d'eau des disques — effet cumulatif sur la taille debout."),
-  mkItem("h4","hygiene","Laver les draps (1×/sem)","Programme 60°C. Acné dorsale et irritations liées aux draps sales."),
-  mkItem("h5","hygiene","Couper les ongles si besoin (1×/sem)","Pieds à plat pour éviter les incarnés."),
+  mkItem("mg1","growth","Téléphone hors chambre la veille ✓","Vérifier que c'était bien fait. La GH est sécrétée entre 23h et 3h — toute perturbation de ce créneau réduit le pic. Si tu avais le téléphone : note mentale, améliore ce soir.","high"),
+  mkItem("mg2","face","Drainage cervical — protocole complet","Ordre strict : pouces le long du SCM (oreille → clavicule) × 10. Puis sous la mâchoire × 8. Puis sous les pommettes × 8. TOUJOURS cet ordre — ouvrir la sortie avant d'envoyer le fluide. Le drainage inversé empire la rétention.","high"),
+  mkItem("mg3","face","Relâche masséter","Pouces sur l'angle de la mâchoire, cercles remontants 30s. Puis milieu joue : enfoncer + ouvrir grand la bouche 8×. Libère le bruxisme nocturne et détend le TMJ."),
+  mkItem("mg4","face","Stretch lingual","Tissu propre, attraper la langue. Tirer gauche/droite 5× chaque (2s maintenu). Haut/bas 3s maintenu. Fascia spiral de la langue — tendu = mewing postérieur impossible. Ne pas forcer."),
+  mkItem("mg5","face","Thumb pulling — matin ★","Dos au mur, menton rentré, posture parfaite. Pouces sur les bords extérieurs du palais, pression haut + extérieur simultanée. 5–6 × 10s. 3 zones : arrière → milieu → avant. Sutures palatines actives jusqu'à ~25 ans chez l'homme.","high"),
+  mkItem("mg6","growth","Petit-déjeuner ★ CRITIQUE","Fromage blanc 200g (20g prot) + flocons d'avoine 50g + poignée noix = ~35g protéines en 4 min. OBLIGATOIRE. Sans petit-déj = catabolisme musculaire pendant 16h. À 62kg en croissance tu dois MANGER pour grandir.","high"),
 ];
 
+// ═══════ HABITUDES JOURNÉE ═══════
+const JOURNEE=[
+  mkItem("j1","growth","Eau — viser 2.5L aujourd'hui","1 bouteille le matin, 1 l'après-midi. Les disques intervertébraux sont composés à 80% d'eau — déshydratation = compression mesurable et perte de taille réelle.","high"),
+  mkItem("j2","face","Mewing — tiers postérieur toute la journée","Langue entière contre le palais, tiers POSTÉRIEUR en priorité. Technique : avaler la salive pour trouver la position correcte, maintenir. Alarme toutes les 2h pour vérifier. Le mewing antérieur seul = contre-productif.","high"),
+  mkItem("j3","face","Respiration nasale exclusive","Bouche fermée en permanence. Respiration buccale = palais qui se rétrécit, hyoïde qui descend, moins d'oxyde nitrique, pire qualité de sommeil. Si difficile la nuit : Myotape sur le marché."),
+  mkItem("j4","face","Déglutition correcte à chaque repas","Langue vers palais (pas vers les dents). Visage neutre en avalant — pas de grimace. Seuls les muscles du cou bougent, pas les joues ni le front."),
+  mkItem("j5","face","Mastication bilatérale — repas du midi","20–30 mastications par bouchée, côtés gauche ET droit. Aliments durs en priorité. Mastication unilatérale = asymétrie faciale progressive."),
+  mkItem("j6","growth","Posture cervicale — check toutes les heures","Oreilles au-dessus des épaules, pas en avant. En classe : imaginer un fil qui tire le sommet du crâne. Tête en avant de 1cm = +10% charge cervicale. Posture directe sur la position de l'hyoïde.","high"),
+  mkItem("j7","growth","Repas cantine — protéines en priorité","Viande ou poisson quand disponible, fromage en substitut. Éviter de remplir avec le pain/féculents avant la protéine. Objectif : 40–50g à ce repas."),
+  mkItem("j8","hygiene","Changer les sous-vêtements","Base quotidienne."),
+];
+
+// ═══════ SOIR HYGIÈNE ═══════
+const SOIR_HYG=[
+  mkItem("sh1","hygiene","Douche — eau tiède + 30s froide finale","La fin froide resserre les pores, réduit l'inflammation cutanée, améliore la circulation. Shampooing max 3×/semaine. Bien rincer la racine — résidus = pellicules."),
+  mkItem("sh2","hygiene","Nettoyant visage (soir) ★ OBLIGATOIRE","LE nettoyage le plus important. 8h de sébum + pollution + bactéries accumulés. Nettoyant doux uniquement : La Roche-Posay Toleriane Gel Moussant ou CeraVe Hydrating Cleanser. Jamais dormir sans.","high"),
+  mkItem("sh3","hygiene","Hydratant visage","Appliquer sur peau légèrement humide juste après nettoyage. Peau grasse déshydratée compense en produisant PLUS de sébum. CeraVe PM ou similaire. Appliquer le gua sha APRÈS l'hydratant."),
+  mkItem("sh4","hygiene","Gua sha post-hydratant (si J3/J5/J7)","Sur peau hydratée. Movements doux vers les ganglions, jamais de pression forte. 3–5 min. Drainage et circulation — ne pas utiliser sur peau sèche."),
+  mkItem("sh5","hygiene","Brosser les dents + fil dentaire","Brossage du soir = le plus critique. 8h de prolifération bactérienne sinon. Fil dentaire 1×/jour, avant le brossage."),
+];
+
+// ═══════ SOIR CROISSANCE & VISAGE ═══════
+const SOIR_GROWTH=[
+  mkItem("sg1","face","Hyoid swallow ★ MEILLEUR EXERCICE","Tête légèrement en arrière (20–30°). Avaler la salive + hard mewing simultané. Sentir la tension dans les muscles suprahyoïdiens. 3 × 15 reps. C'est l'exercice le plus direct pour lever l'hyoïde — aucun autre ne le cible aussi bien.","high"),
+  mkItem("sg2","face","Jaw opening résisté","Poing ferme sous le menton comme butée. Ouvrir la bouche contre la résistance de ton poing (3s pour ouvrir, 3s pour fermer). 3 × 12 reps. Travaille les suprahyoïdiens dans la chaîne d'ouverture."),
+  mkItem("sg3","face","Thumb pulling — soir ★","Même protocole que le matin. Dos au mur, posture parfaite, 3 zones, 5–6 × 10s. 2 sessions/jour = facteur décisif. Les sutures palatines répondent à la pression cumulée.","high"),
+  mkItem("sg4","growth","Bar hang décompression ★★★","Suspension complète à la barre, jambes croisées, corps RELÂCHÉ — pas de Valsalva, pas de tension volontaire. 3 × 30–45s (repos 60s entre). Puis immédiatement 10 squat jumps pour recomprimer et aider les disques à retenir l'eau. Effet cumulatif sur la taille debout sur plusieurs semaines.","high"),
+  mkItem("sg5","growth","Chin tucks soir","Allongé ou assis. Rentrer le menton en allongeant la nuque vers le haut (pas vers l'arrière). 5s maintenu. 2 × 15. Repositionne les vertèbres cervicales et améliore la hauteur posturale."),
+];
+
+// ═══════ COUCHER ═══════
+const COUCHER=[
+  mkItem("c1","growth","TÉLÉPHONE HORS CHAMBRE ★★★","MODE AVION ou éteint. Hors de la chambre physiquement — pas sur la table de chevet. 70% de la GH sécrétée entre 23h et 3h. C'est LE levier n°1 de ta croissance. Non-négociable. Réveil basique = solution.","high"),
+  mkItem("c2","growth","Couché avant 23h — 8h20 minimum","Pendant la puberté : 8h20–8h30 minimum. Rythme FIXE même le week-end — l'irrégularité casse le pic de GH autant que la durée courte. Chambre froide (17–19°C) et sombre. Cible : couché 22h30, réveil 6h50.","high"),
+  mkItem("c3","hygiene","Taie d'oreiller propre (2×/semaine)","8h de contact peau/taie. Sébum + bactéries = acné. Retourner les jours sans changement. Laver à 60°C."),
+];
+
+// ═══════ NUTRITION ═══════
+const NUTRITION=[
+  mkItem("n1","nutrition","Protéines ≥ 125g aujourd'hui ★","À 62kg en croissance : 125g MINIMUM. Sources : fromage blanc skyr (11g/100g), œufs (6g/unité), viande/poisson (25g/100g), sardines (22g/100g), flocons d'avoine (13g/100g). Calcule à l'œil sur la journée.","high"),
+  mkItem("n2","nutrition","Calcium aujourd'hui","2–3 laitages (verre de lait entier = 300mg calcium). Sardines avec arêtes = meilleure source dense. 1000–1200mg/jour objectif. Calcium = minéralisation des plaques de croissance. Passer au lait entier."),
+  mkItem("n3","nutrition","D3 + K2 (si pas de soleil)","D3 : soleil 20 min ou complément en hiver (1000–2000 UI). K2 : beurre, jaunes d'œufs, fromages affinés (emmental, comté). K2 dirige le calcium vers les os et NON vers les artères. Trio indispensable : Ca + D3 + K2."),
+  mkItem("n4","nutrition","Surplus calorique léger","À 62kg tu dois manger en léger surplus (2400–2600 kcal). Pas de restriction. Maigrir = inhiber GH. Grossir trop = obésité précoce = aromatase = fermeture plaques prématurée. Équilibre."),
+];
+
+// ═══════ HEBDOMADAIRE ═══════
+const HEBDO=[
+  mkItem("h1","face","Drainage complet 10–12 min ★","Ordre strict — 10 pressions chaque zone : (1) Cou entier SCM × 10 (2) Sous mâchoire × 8 (3) Milieu joue bouche ouverte × 8 (4) Sous menton × 6 (5) Pommettes × 8 (6) Masséter × 6 (7) Bords nez × 6 (8) TMJ × 5 (9) Retour cou × 10. Commencer ET finir par le cou."),
+  mkItem("h2","face","Falim chewing gum 10–15 min","10–15 min MAX par session. Côté faible en priorité (celui qui fatigue le plus vite). Hypertrophie progressive du masséter = angle de mâchoire plus marqué. Pas plus de 15 min = risque TMJ."),
+  mkItem("h3","growth","Tractions excentriques lentes","Descente 5–6s très lente, pause 3s bras ENTIÈREMENT tendus. 3–5 reps seulement. Améliore l'imbibition des disques intervertébraux — effet cumulatif sur la taille debout mesurable sur 4–8 semaines."),
+  mkItem("h4","hygiene","Laver les draps","Programme 60°C. Acné dorsale et irritations liées aux draps sales. 1× par semaine minimum."),
+  mkItem("h5","hygiene","Argile blanche sur le nez","Appliquer sur les points noirs uniquement. 10–15 min, rincer à l'eau tiède. 1–2×/semaine max — trop fréquent = dessèchement et rebond sébum."),
+  mkItem("h6","hygiene","Couper les ongles si besoin","Pieds à plat pour éviter les incarnés. Ne pas couper en arrondi sur les orteils."),
+];
+
+// ═══════ SPORT ═══════
 const SPORT={
   J1:{label:"Push + Core",emoji:"💪",exs:[
-    {n:"Pompes sur poings (coudes 45°)",s:"4 × 8–12",r:"90s",p:"→ 4×12 : pompes archer",d:"Poings à largeur d'épaules. Coudes 45° — ni collés ni écartés. Descente 3s lente, explosion. Cible pectoraux + triceps. Fist grip obligatoire (poignet)."},
-    {n:"Dips (buste penché en avant)",s:"4 × 6–10",r:"2 min",p:"→ 4×10 : lester bande",d:"Penché pour cibler les pecs. Descente 3s. Ne pas verrouiller les coudes en haut."},
-    {n:"Pike push-ups (poings)",s:"3 × 8–12",r:"90s",p:"→ 3×12 : pieds surélevés",d:"Corps en V inversé, tête vers le sol. Isole les deltoïdes. Descente jusqu'à frôler le sol."},
-    {n:"Hollow body hold",s:"4 × 20–40s",r:"60s",p:"→ 4×40s : hollow rocks",d:"Dos plaqué au sol. Jambes à 30–45°, bras tendus derrière. Si trop dur : genoux fléchis."},
-    {n:"Lever de jambes suspendu",s:"3 × 8–12",r:"90s",p:"Genoux → jambes tendues",d:"Montée lente, descente contrôlée 3s. Éviter le balancement."},
+    {n:"Pompes sur poings (coudes 45°)",s:"4 × 8–12",r:"90s",p:"→ 4×12 : pompes archer",d:"Poings à largeur d'épaules. Coudes 45° — ni collés ni écartés. Descente 3s lente, explosion vers le haut. Cible pectoraux + triceps. Fist grip OBLIGATOIRE (poignet droit)."},
+    {n:"Dips (buste penché en avant)",s:"4 × 6–10",r:"2 min",p:"→ 4×10 : lester avec bande",d:"Penché pour cibler les pecs. Descente 3s. Ne pas verrouiller les coudes en haut — garder légère flexion."},
+    {n:"Pike push-ups (sur poings)",s:"3 × 8–12",r:"90s",p:"→ 3×12 : pieds surélevés",d:"Corps en V inversé, tête vers le sol. Isole les deltoïdes. Descente jusqu'à frôler le sol. Poings pour protéger le poignet."},
+    {n:"Hollow body hold",s:"4 × 20–40s",r:"60s",p:"→ 4×40s : hollow rocks",d:"Dos PLAQUÉ au sol. Jambes à 30–45°, bras tendus derrière la tête. Si trop dur : commencer genoux fléchis. Nuque dans l'axe."},
+    {n:"Lever de jambes suspendu",s:"3 × 8–12",r:"90s",p:"Genoux fléchis → jambes tendues",d:"Montée lente, descente contrôlée 3s. Éviter le balancement. Core anti-flexion."},
   ]},
   J2:{label:"Pull + Biceps",emoji:"🦾",exs:[
-    {n:"Tractions pronation (full ROM)",s:"4 × 5–8",r:"2 min",p:"→ 4×8 : lest",d:"Bras ENTIÈREMENT tendus en bas à chaque rep. Descente 3s. C'est le mouvement roi pour toi — décompresse aussi la colonne."},
-    {n:"Tractions supination",s:"3 × 5–8",r:"2 min",p:"Même logique",d:"Prise supine, coudes près du corps. Biceps + bas des dorsaux. Descente 3s."},
-    {n:"Australian pull-ups",s:"3 × 10–15",r:"90s",p:"→ pieds surélevés",d:"Barre à hauteur poitrine, corps incliné. Régler la difficulté par l'inclinaison."},
-    {n:"Curl haltère alterné (10kg)",s:"3 × 8–12",r:"90s",p:"→ 3×12 : tempo 4s",d:"Buste fixe, coudes collés. Supination complète en haut. Descente 3s."},
-    {n:"Face pulls bande",s:"3 × 15–20",r:"60s",p:"Bande plus résistante",d:"Bande à hauteur des yeux. Coudes hauts, mains qui s'écartent. Santé des épaules."},
+    {n:"Tractions pronation (full ROM)",s:"4 × 5–8",r:"2 min",p:"→ 4×8 : ajouter lest",d:"Bras ENTIÈREMENT tendus en bas à chaque rep. Descente 3s. Mouvement roi — décompresse aussi la colonne. Priorité absolue."},
+    {n:"Tractions supination",s:"3 × 5–8",r:"2 min",p:"Même logique",d:"Prise supine, coudes près du corps. Biceps + bas dorsaux. Descente 3s. Ne pas se balancer."},
+    {n:"Australian pull-ups",s:"3 × 10–15",r:"90s",p:"→ pieds surélevés",d:"Barre à hauteur poitrine, corps incliné. Régler la difficulté par l'inclinaison. Volume bas du dos."},
+    {n:"Curl haltère alterné (10kg)",s:"3 × 8–12",r:"90s",p:"→ 3×12 : tempo 4s descente",d:"Buste fixe, coudes collés au corps. Supination complète en haut. Descente 3s contrôlée."},
+    {n:"Face pulls bande résistance",s:"3 × 15–20",r:"60s",p:"Bande plus résistante",d:"Bande à hauteur des yeux. Coudes hauts, mains qui s'écartent vers les oreilles. Santé des épaules et équilibre postérieur."},
   ]},
   J3:{label:"Jambes + Core",emoji:"🦵",exs:[
-    {n:"Squat bulgare",s:"4 × 8–12",r:"2 min",p:"Corps → 5kg → 10kg",d:"Pied arrière sur chaise, pied avant loin. Descente 3s. Le stimulus de compression des jambes favorise la GH — bonne complémentarité avec les tractions."},
-    {n:"Hip thrust (épaules sur canapé)",s:"4 × 12–15",r:"90s",p:"Lest progressif",d:"Alignement hanche-genou-épaule en haut. Serrer fessiers 1s. Descente 2s."},
-    {n:"Nordic curl négatif (4–5s)",s:"3 × 4–6",r:"2 min",p:"→ remontée complète",d:"Pieds bloqués sous meuble. Se laisser tomber très lentement. Mains pour remonter. Ischio en excentrique."},
-    {n:"Mollets sur marche",s:"4 × 15–20",r:"60s",p:"Bilatéral → unilatéral",d:"Descente complète sous le niveau de la marche, montée explosive. Full ROM."},
-    {n:"Ab wheel / planche dynamique",s:"3 × 8–12",r:"90s",p:"Genoux → debout",d:"Gainage anti-rotation. Core fort = meilleure posture = taille mesurable améliorée."},
+    {n:"Squat bulgare",s:"4 × 8–12",r:"2 min",p:"Corps → 5kg haltères → 10kg",d:"Pied arrière sur chaise, pied avant loin. Descente 3s. Stimulus hormonal jambes = GH élevée — bonne synergie avec bar hangs du soir."},
+    {n:"Hip thrust (épaules sur canapé)",s:"4 × 12–15",r:"90s",p:"Lest progressif",d:"Alignement hanche-genou-épaule en haut. Serrer fessiers 1s. Descente 2s. Progresser en ajoutant les haltères sur les hanches."},
+    {n:"Nordic curl négatif (4–5s)",s:"3 × 4–6",r:"2 min",p:"→ remontée complète",d:"Pieds bloqués sous meuble. Se laisser tomber TRÈS lentement 4–5s. Mains pour remonter. Ischio-jambiers en excentrique = prévention blessures."},
+    {n:"Mollets sur marche",s:"4 × 15–20",r:"60s",p:"Bilatéral → unilatéral",d:"Descente complète SOUS le niveau de la marche, montée explosive. Full ROM. Progresser vers le unilatéral."},
+    {n:"Ab wheel / Planche dynamique",s:"3 × 8–12",r:"90s",p:"Genoux → debout",d:"Gainage anti-rotation. Core fort = meilleure posture = taille mesurable améliorée."},
   ]},
   J4:{label:"Push — Volume",emoji:"🔥",exs:[
-    {n:"Pompes diamant (poings)",s:"4 × 8–12",r:"90s",p:"→ pieds surélevés",d:"Poings rapprochés sous le sternum. Coudes longeant le corps. Triceps + pec interne."},
-    {n:"Pompes larges (poings)",s:"3 × 10–15",r:"90s",p:"Volume pur",d:"Poings écartés. Descente 3s. Pectoraux externes. Pas de lest — accumulation de volume."},
-    {n:"Dips lestés (bande)",s:"4 × 6–8",r:"2 min",p:"Lest progressif",d:"Meilleur levier de progression en force poussée en callisthénie."},
-    {n:"Lateral raise haltères (5kg)",s:"3 × 12–15",r:"60s",p:"5kg → 10kg",d:"Légèrement penché. Montée jusqu'à l'horizontal. Descente 3s. Si tu te balances = trop lourd."},
-    {n:"Triceps overhead haltère (10kg)",s:"3 × 10–12",r:"90s",p:"→ 3×12 puis charge",d:"Coudes fixes pointant vers le haut. Extension complète. Descente 3s."},
+    {n:"Pompes diamant (sur poings)",s:"4 × 8–12",r:"90s",p:"→ pieds surélevés",d:"Poings rapprochés sous le sternum. Coudes longeant le corps. Triceps + pec interne."},
+    {n:"Pompes larges (sur poings)",s:"3 × 10–15",r:"90s",p:"Volume pur",d:"Poings écartés à 1.5× largeur épaules. Descente 3s. Pectoraux externes."},
+    {n:"Dips lestés (bande 15kg)",s:"4 × 6–8",r:"2 min",p:"Lest progressif",d:"Meilleur levier de progression en force en callisthénie. Full ROM obligatoire."},
+    {n:"Lateral raise haltères (5kg)",s:"3 × 12–15",r:"60s",p:"5kg → 10kg",d:"Légèrement penché. Montée jusqu'à l'horizontal, pas au-delà. Descente 3s. Si tu te balances = trop lourd."},
+    {n:"Triceps overhead haltère (10kg)",s:"3 × 10–12",r:"90s",p:"→ 3×12 puis augmenter charge",d:"Coudes fixes pointant vers le haut. Extension complète. Descente 3s."},
   ]},
   J5:{label:"Pull + Neck",emoji:"🦅",exs:[
-    {n:"Tractions neutres",s:"4 × 6–10",r:"2 min",p:"Lest progressif",d:"Prise neutre. Brachial + dorsaux. Full ROM. Descente 3s."},
-    {n:"Australian pull-ups larges",s:"4 × 10–15",r:"90s",p:"→ pieds plus hauts",d:"Prise très large. Corps horizontal. Crée le V-taper — silhouette visuellement plus grande."},
-    {n:"Rowing haltère unilatéral (10kg)",s:"3 × 10–12",r:"90s",p:"Technique d'abord",d:"Dos plat. Tirer le coude vers le plafond. ROM complet."},
-    {n:"Chin tucks + neck curl allongé",s:"3 × 15–20",r:"60s",p:"→ résistance main",d:"Allongé : rentrer le menton, soulever la tête. Descente 3s. Fléchisseurs profonds du cou = position de l'hyoïde."},
+    {n:"Tractions prise neutre",s:"4 × 6–10",r:"2 min",p:"Lest progressif",d:"Prise neutre (paumes face à face). Brachial + dorsaux. Full ROM. Descente 3s."},
+    {n:"Australian pull-ups larges",s:"4 × 10–15",r:"90s",p:"→ pieds plus hauts",d:"Prise très large. Corps horizontal. V-taper — silhouette visuellement plus grande."},
+    {n:"Rowing haltère unilatéral (10kg)",s:"3 × 10–12",r:"90s",p:"Technique avant charge",d:"Dos plat. Tirer le coude vers le plafond. ROM complet. Support sur genou."},
+    {n:"Chin tucks + neck curl allongé",s:"3 × 15–20",r:"60s",p:"→ résistance main",d:"Allongé : rentrer le menton, soulever la tête 2–3 cm. Descente 3s. Fléchisseurs profonds du cou = position de l'hyoïde directement."},
     {n:"Shrugs haltères (10kg)",s:"3 × 12–15",r:"60s",p:"Lest progressif",d:"Contraction 2s en haut, descente 3s. Équilibre visuel cou/épaules."},
   ]},
   J6:{label:"Full Body — Intensité",emoji:"⚡",exs:[
-    {n:"Tractions pronation MAX ← note le chiffre",s:"3 × max",r:"3 min",p:"Benchmark hebdo",d:"Max reps full ROM strict. Note les 3 séries. Si ça monte semaine à semaine = le programme fonctionne."},
-    {n:"Dips MAX ← note le chiffre",s:"3 × max",r:"3 min",p:"Benchmark hebdo",d:"Full ROM, pas de rebond. Note les chiffres chaque semaine."},
-    {n:"Squat sauté (descente 3s)",s:"4 × 10",r:"90s",p:"→ lest haltères",d:"Explosion maximale. Puissance = différent de la force. Stimulus GH élevé."},
-    {n:"Pompes explosives (poings)",s:"3 × 6–8",r:"2 min",p:"→ applaudissement",d:"Descente 2s, poussée explosive. Atterrissage souple."},
-    {n:"L-sit suspendu",s:"4 × max",r:"90s",p:"Genoux → tendus",d:"Core + fléchisseurs + épaules. Commencer genoux fléchis."},
+    {n:"Tractions pronation MAX ← NOTE LE CHIFFRE",s:"3 × max",r:"3 min",p:"📊 Benchmark hebdo",d:"Max reps full ROM strict. Note les 3 séries. Si ça monte semaine à semaine = le programme fonctionne. Si stagnation = dormir plus / manger plus."},
+    {n:"Dips MAX ← NOTE LE CHIFFRE",s:"3 × max",r:"3 min",p:"📊 Benchmark hebdo",d:"Full ROM, pas de rebond. Note les chiffres chaque semaine sans exception."},
+    {n:"Squat sauté (descente 3s)",s:"4 × 10",r:"90s",p:"→ lester haltères",d:"Explosion maximale. Puissance = différent de la force. Stimulus GH élevé sur les jambes."},
+    {n:"Pompes explosives (sur poings)",s:"3 × 6–8",r:"2 min",p:"→ applaudissement",d:"Descente 2s, poussée explosive. Atterrissage souple. Puissance poussée."},
+    {n:"L-sit suspendu",s:"4 × max",r:"90s",p:"Genoux fléchis → jambes tendues",d:"Core + fléchisseurs hanches + épaules. Commencer genoux fléchis."},
   ]},
   J7:{label:"Repos actif",emoji:"🌿",exs:[
-    {n:"Marche 20–30 min",s:"—",r:"—",p:"Récupération active",d:"Active la circulation sans fatigue. Accélère la récupération musculaire."},
-    {n:"Étirements statiques",s:"30–60s chaque",r:"—",p:"Pecs, dorsaux, ischio",d:"Maintenir sans forcer. Jamais sur muscle froid."},
-    {n:"Mewing conscient renforcé",s:"10 min",r:"—",p:"",d:"Ancrer les habitudes pendant le repos."},
-    {n:"Chin tucks légers",s:"2 × 15",r:"—",p:"",d:"Maintien minimal. Jour de repos."},
+    {n:"Marche 20–30 min",s:"—",r:"—",p:"Récupération active",d:"Active la circulation sans fatigue musculaire. Accélère la récupération. Prodigieusement sous-estimé."},
+    {n:"Étirements statiques",s:"30–60s chaque",r:"—",p:"Pecs, dorsaux, ischio",d:"Maintenir sans forcer. JAMAIS sur muscle froid. Inclure hip flexors (genou au sol)."},
+    {n:"Mewing conscient 10 min","s":"—",r:"—",p:"",d:"Ancrer les habitudes posturales pendant le repos actif."},
+    {n:"Chin tucks légers",s:"2 × 15",r:"—",p:"",d:"Maintien minimal. Jour de repos — pas d'intensité."},
   ]},
 };
 
+// ═══════ BUDGET DATA ═══════
+const BUDGET_TOTAL=70;
+const BUDGET_ITEMS=[
+  // DÉJÀ DANS LE BUDGET (37€)
+  {id:"b1",name:"Nettoyant visage doux",where:"Pharmacie / grande surface",price:10,priority:"essentiel",bought:false,detail:"La Roche-Posay Toleriane Gel Moussant (150ml ~9€) ou CeraVe Hydrating Cleanser (236ml ~11€). Soir uniquement. Le plus impactant produit soin. Dure 2–3 mois."},
+  {id:"b2",name:"Hydratant visage léger",where:"Pharmacie / grande surface",price:12,priority:"essentiel",bought:false,detail:"CeraVe PM Facial Moisturizing Lotion (~12€) ou Neutrogena Hydro Boost (~13€). Appliquer sur peau humide après nettoyage. Peau grasse déshydratée = plus de sébum."},
+  {id:"b3",name:"Argile blanche (kaolin)",where:"Pharmacie / parapharmacie",price:3,priority:"essentiel",bought:false,detail:"Argiletz ou équivalent. 1–2×/semaine sur le nez uniquement. Pour les points noirs ancrés. Dure très longtemps (200–300g pour ~3€)."},
+  {id:"b4",name:"Gua sha (pierre de jade)",where:"Amazon / AliExpress",price:8,priority:"utile",bought:false,detail:"Amazon : ~6–10€. Utiliser APRÈS hydratant, jamais sur peau sèche. Mouvements doux vers les ganglions. Drainage + circulation faciale. Optionnel mais durable."},
+  {id:"b5",name:"Falim chewing gum",where:"Épicerie turque / Amazon",price:4,priority:"utile",bought:false,detail:"Boîte de 100 pièces ~3–5€. 10–15 min max/session, 2–3×/semaine. Hypertrophie masséter progressive. Ne pas dépasser — risque TMJ."},
+  // BUDGET RESTANT (33€)
+  {id:"b6",name:"Lait entier (switch demi-écrémé)",where:"Supermarché",price:0,priority:"essentiel",bought:false,detail:"Gratuit si tu remplaces juste ce que tu achètes déjà. Lait entier = plus de graisses saturées, meilleure absorption vitamine D, meilleur profil hormonal en croissance. Même prix ou légèrement plus cher (~0.20€/litre)."},
+  {id:"b7",name:"Œufs (×12)",where:"Supermarché / Marché",price:3,priority:"essentiel",bought:false,detail:"12 œufs ~2.50–3.50€. 6g protéines/œuf + jaune = D3 naturel + K2. Objectif : 3–4 œufs/jour minimum. Cuisson œuf au plat/brouillé = simple et rapide. Source protéine la moins chère."},
+  {id:"b8",name:"Fromage blanc / Skyr (1kg)",where:"Supermarché",price:4,priority:"essentiel",bought:false,detail:"Marque distributeur : ~2.50–4€/kg. 10–11g protéines/100g. Manger 200–300g au petit-déj avec flocons. Saturation protéique le matin = meilleure régulation appétit + construction musculaire."},
+  {id:"b9",name:"Sardines en conserve (×4)",where:"Supermarché",price:5,priority:"essentiel",bought:false,detail:"4 boîtes ~1.20€/boîte = ~5€. 22g protéines/100g + calcium des arêtes + D3 naturel + oméga-3. Double bénéfice : protéines ET calcium. Source la plus dense nutritionnellement pour le prix."},
+  {id:"b10",name:"Flocons d'avoine (500g)",where:"Supermarché",price:2,priority:"essentiel",bought:false,detail:"~1.50–2.50€ les 500g. 13g protéines/100g + glucides complexes + fibres. Base du petit-déjeuner avec fromage blanc. Cuit en 2 min au micro-ondes."},
+  {id:"b11",name:"Vitamine D3 2000 UI (hiver)",where:"Pharmacie / Amazon",price:8,priority:"utile",bought:false,detail:"~8–12€ pour 90–180 comprimés. UNIQUEMENT en automne/hiver si peu de soleil. Trio Ca+D3+K2 = plaques de croissance. Ne pas prendre en été si tu as le soleil quotidiennement."},
+  {id:"b12",name:"Noix / amandes (200g)",where:"Supermarché",price:3,priority:"utile",bought:false,detail:"~2–4€. Graisses saines + protéines + magnésium. Ajouter au petit-déjeuner. Ne pas exagérer : haute densité calorique."},
+];
+
+// ═══════ DAYS CONFIG ═══════
 const DAYS_FR=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
 const DAYS_SHORT=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
 const SK=["J1","J2","J3","J4","J5","J6","J7"];
-const HEBDO_DAYS=[2,4,6];
+const HEBDO_DAYS=[2,4,6]; // Mercredi, Vendredi, Dimanche
 const JS2I={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
 
 function todayI(){return JS2I[new Date().getDay()];}
@@ -397,9 +467,12 @@ function ikey(di,id){return dayDate(di)+"_"+id;}
 
 // ── STATE ──
 let ST={};
-try{ST=JSON.parse(localStorage.getItem("asc_v1")||"{}");}catch{}
-function save(){try{localStorage.setItem("asc_v1",JSON.stringify(ST));}catch{}}
+try{ST=JSON.parse(localStorage.getItem("asc_v2")||"{}");}catch{}
+// Migrate from v1
+try{const old=JSON.parse(localStorage.getItem("asc_v1")||"{}");if(Object.keys(old).length>0&&Object.keys(ST).length===0){ST=old;save();}}catch{}
+function save(){try{localStorage.setItem("asc_v2",JSON.stringify(ST));}catch{}}
 function isChk(di,id){return !!ST[ikey(di,id)];}
+function isBought(id){return !!ST["budget_"+id];}
 
 function toggleChk(di,id,xpVal,ev){
   const k=ikey(di,id);const kx=ikey(di,id+"_xp");
@@ -407,6 +480,12 @@ function toggleChk(di,id,xpVal,ev){
   if(ST[k]){ST[kx]=xpVal;if(ev)showXPPopup(ev,xpVal);}
   else{delete ST[kx];}
   save();updateGlobalXP();renderDay(di);renderTabs();updateHeader();
+}
+
+function toggleBought(id){
+  const k="budget_"+id;
+  ST[k]=!ST[k];
+  save();renderBudget();
 }
 
 // ── XP CALC ──
@@ -436,7 +515,7 @@ function calcStreak(){
   return streak;
 }
 function getAllItems(di){
-  const base=[...MATIN_HYG,...MATIN_GROWTH,...JOURNEE,...SOIR_HYG,...SOIR_GROWTH,...COUCHER,...TOUJOURS];
+  const base=[...MATIN_HYG,...MATIN_GROWTH,...JOURNEE,...SOIR_HYG,...SOIR_GROWTH,...COUCHER,...NUTRITION];
   if(HEBDO_DAYS.includes(di))return[...base,...HEBDO];
   return base;
 }
@@ -450,23 +529,15 @@ function dayProg(di){
 
 // ── CAT PROGRESS ──
 function catProg(di){
-  // Items grouped by cat
-  const allItems=getAllItems(di);
-  const sk=SK[di];
-  const cats={growth:{done:0,total:0},face:{done:0,total:0},sport:{done:0,total:0},hygiene:{done:0,total:0}};
+  const allItems=getAllItems(di);const sk=SK[di];
+  const cats={growth:{done:0,total:0},face:{done:0,total:0},sport:{done:0,total:0},hygiene:{done:0,total:0},nutrition:{done:0,total:0}};
   for(const it of allItems){
     const c=cats[it.cat];if(!c)continue;
-    c.total++;
-    if(isChk(di,it.id))c.done++;
+    c.total++;if(isChk(di,it.id))c.done++;
   }
-  // sport exercises
-  SPORT[sk].exs.forEach((_,i)=>{
-    cats.sport.total++;
-    if(isChk(di,`e_${sk}_${i}`))cats.sport.done++;
-  });
+  SPORT[sk].exs.forEach((_,i)=>{cats.sport.total++;if(isChk(di,`e_${sk}_${i}`))cats.sport.done++;});
   return cats;
 }
-
 function catProgHTML(di){
   const cp=catProg(di);
   const defs=[
@@ -476,13 +547,9 @@ function catProgHTML(di){
     {key:"hygiene",label:"Hygiène",color:"cpf-hygiene",textColor:"#94a3b8"},
   ];
   return`<div class="cat-progress-grid">${defs.map(d=>{
-    const{done,total}=cp[d.key];
-    const pct=total>0?Math.round(done/total*100):0;
+    const{done,total}=cp[d.key];const pct=total>0?Math.round(done/total*100):0;
     return`<div class="cat-prog-item">
-      <div class="cat-prog-top">
-        <span class="cat-prog-label" style="color:${d.textColor}">${d.label}</span>
-        <span class="cat-prog-pct">${pct}%</span>
-      </div>
+      <div class="cat-prog-top"><span class="cat-prog-label" style="color:${d.textColor}">${d.label}</span><span class="cat-prog-pct">${pct}%</span></div>
       <div class="cat-prog-bar"><div class="cat-prog-fill ${d.color}" style="width:${pct}%"></div></div>
       <div class="cat-prog-done">${done} / ${total}</div>
     </div>`;
@@ -491,8 +558,7 @@ function catProgHTML(di){
 
 // ── XP POPUP ──
 function showXPPopup(ev,xp){
-  const el=document.createElement("div");
-  el.className="xp-popup";el.textContent="+"+xp+" XP";
+  const el=document.createElement("div");el.className="xp-popup";el.textContent="+"+xp+" XP";
   const touch=ev.touches?ev.touches[0]:ev;
   el.style.left=(touch.clientX-20)+"px";el.style.top=(touch.clientY-30)+"px";
   document.body.appendChild(el);setTimeout(()=>el.remove(),1200);
@@ -503,8 +569,7 @@ let lastRank=null;
 function checkRankUp(xp){
   const r=getRank(xp);
   if(lastRank&&r.name!==lastRank.name){
-    const flash=document.createElement("div");
-    flash.className="rank-flash";
+    const flash=document.createElement("div");flash.className="rank-flash";
     flash.innerHTML=`<div class="rank-flash-inner"><div class="rank-flash-title">RANG ATTEINT</div><div class="rank-flash-name">${r.emoji} ${r.name}</div></div>`;
     document.body.appendChild(flash);setTimeout(()=>flash.remove(),2500);
   }
@@ -513,16 +578,12 @@ function checkRankUp(xp){
 
 // ── HEADER ──
 function updateHeader(){
-  const xp=calcTotalXP();
-  const rank=getRank(xp);const next=getNextRank(xp);
-  const level=getLevel(xp);
-  const streak=calcStreak();
-  const{pct}=dayProg(todayI());
+  const xp=calcTotalXP();const rank=getRank(xp);const next=getNextRank(xp);
+  const level=getLevel(xp);const streak=calcStreak();const{pct}=dayProg(todayI());
   document.getElementById("rank-label").textContent="RANG : "+rank.name.toUpperCase();
   document.getElementById("rank-label").style.color=rank.color||"var(--gold)";
   if(next){
-    const prog=xp-rank.minXP;const needed=next.minXP-rank.minXP;
-    const pctBar=Math.round(prog/needed*100);
+    const prog=xp-rank.minXP;const needed=next.minXP-rank.minXP;const pctBar=Math.round(prog/needed*100);
     document.getElementById("xp-label").textContent=xp+" / "+next.minXP+" XP";
     document.getElementById("xp-bar-fill").style.width=pctBar+"%";
     document.getElementById("xp-bar-glow").style.width=pctBar+"%";
@@ -540,12 +601,11 @@ function updateGlobalXP(){updateHeader();}
 
 // ── HTML BUILDERS ──
 function catTag(cat){
-  const labels={growth:"Croissance",face:"Visage",sport:"Sport",hygiene:"Hygiène"};
+  const labels={growth:"Croissance",face:"Visage",sport:"Sport",hygiene:"Hygiène",nutrition:"Nutrition"};
   return`<span class="icat cat-${cat}">${labels[cat]||cat}</span>`;
 }
 function itemHTML(it,di){
-  const done=isChk(di,it.id);
-  const EXP_STATE=window["exp_"+di+"_"+it.id]||false;
+  const done=isChk(di,it.id);const EXP_STATE=window["exp_"+di+"_"+it.id]||false;
   return`<div class="item${done?" done":""}${it.priority?" priority-high":""}${EXP_STATE?" expanded":""}" id="I_${di}_${it.id}">
     <div class="item-top">
       <div class="item-chk-zone" onclick="doToggle(event,${di},'${it.id}',${it.xp})">
@@ -555,7 +615,7 @@ function itemHTML(it,di){
       <div class="item-right">
         ${catTag(it.cat)}
         <span class="ixp">+${it.xp}</span>
-        <span class="iexp" onclick="togExp(${di},'${it.id}')">▾</span>
+        ${it.desc?`<span class="iexp" onclick="togExp(${di},'${it.id}')">▾</span>`:""}
       </div>
     </div>
     ${it.desc?`<div class="idesc">${it.desc}</div>`:""}
@@ -599,21 +659,22 @@ function sportHTML(di){
     <div class="sport-bdy">${rows}</div>
   </div>`;
 }
-function sec(title,icon,time,xpMax,dot,html){
+function sec(title,icon,time,xpMax,html){
   return`<div class="sec">
     <div class="sec-header">
       <span class="sec-icon">${icon}</span>
       <span class="sec-title">${title}</span>
-      ${xpMax?`<span class="sec-xp">+${xpMax}XP max</span>`:""}
+      ${xpMax?`<span class="sec-xp">+${xpMax}XP</span>`:""}
       ${time?`<span class="sec-time">${time}</span>`:""}
     </div>
     <div class="items">${html}</div>
   </div>`;
 }
+
+// ── RENDER DAY ──
 function renderDay(di){
   const el=document.getElementById("P_"+di);if(!el)return;
-  const sk=SK[di];const{done,total,pct,xpEarned}=dayProg(di);
-  const isT=di===todayI();
+  const sk=SK[di];const{done,total,pct,xpEarned}=dayProg(di);const isT=di===todayI();
   const maxXP=getAllItems(di).reduce((s,it)=>s+it.xp,0)+SPORT[sk].exs.length*XP.sport;
   el.innerHTML=`
     <div class="day-hero">
@@ -626,24 +687,109 @@ function renderDay(di){
       </div>
     </div>
     <div class="day-prog">
-      <div class="day-prog-row">
-        <span class="day-prog-title">Progression globale</span>
-        <span class="day-prog-nums">${done} / ${total}</span>
-      </div>
+      <div class="day-prog-row"><span class="day-prog-title">Progression globale</span><span class="day-prog-nums">${done} / ${total}</span></div>
       <div class="day-prog-bar"><div class="day-prog-fill" style="width:${pct}%"></div></div>
-      <div class="day-xp-earn">⚡ ${xpEarned} / ${maxXP} XP gagnés aujourd'hui</div>
+      <div class="day-xp-earn">⚡ ${xpEarned} / ${maxXP} XP gagnés</div>
       ${pct===100?'<div class="day-complete">⭐ JOURNÉE COMPLÈTE ⭐</div>':""}
       ${catProgHTML(di)}
     </div>
-    ${sec("Matin — Hygiène","🧼","",MATIN_HYG.reduce((s,it)=>s+it.xp,0),"var(--hygiene)",MATIN_HYG.map(it=>itemHTML(it,di)).join(""))}
-    ${sec("Matin — Croissance & Visage","🌅","~15 min",MATIN_GROWTH.reduce((s,it)=>s+it.xp,0),"var(--growth)",MATIN_GROWTH.map(it=>itemHTML(it,di)).join(""))}
-    ${sec("Sport","💪",sk==="J7"?"~20 min":"~35–45 min",SPORT[sk].exs.length*XP.sport,"var(--sport)",sportHTML(di))}
-    ${sec("Journée — Habitudes clés","⚡","",JOURNEE.reduce((s,it)=>s+it.xp,0),"var(--growth)",JOURNEE.map(it=>itemHTML(it,di)).join(""))}
-    ${sec("Soir — Hygiène","🚿","",SOIR_HYG.reduce((s,it)=>s+it.xp,0),"var(--hygiene)",SOIR_HYG.map(it=>itemHTML(it,di)).join(""))}
-    ${sec("Soir — Protocole Croissance & Visage","🌙","~15 min",SOIR_GROWTH.reduce((s,it)=>s+it.xp,0),"var(--growth)",SOIR_GROWTH.map(it=>itemHTML(it,di)).join(""))}
-    ${sec("Coucher","😴","23h max",COUCHER.reduce((s,it)=>s+it.xp,0),"var(--sleep)",COUCHER.map(it=>itemHTML(it,di)).join(""))}
-    ${HEBDO_DAYS.includes(di)?sec("Hebdomadaire (ce jour)","📅","~12 min",HEBDO.reduce((s,it)=>s+it.xp,0),"var(--face)",HEBDO.map(it=>itemHTML(it,di)).join("")):""}
-    ${sec("Piliers permanents","🔑","",TOUJOURS.reduce((s,it)=>s+it.xp,0),"var(--always)",TOUJOURS.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Matin — Hygiène","🧼","",MATIN_HYG.reduce((s,it)=>s+it.xp,0),MATIN_HYG.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Matin — Croissance & Visage","🌅","~15 min",MATIN_GROWTH.reduce((s,it)=>s+it.xp,0),MATIN_GROWTH.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Sport","💪",sk==="J7"?"~20 min":"~35–45 min",SPORT[sk].exs.length*XP.sport,sportHTML(di))}
+    ${sec("Journée — Habitudes clés","⚡","",JOURNEE.reduce((s,it)=>s+it.xp,0),JOURNEE.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Soir — Hygiène","🚿","",SOIR_HYG.reduce((s,it)=>s+it.xp,0),SOIR_HYG.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Soir — Croissance & Visage","🌙","~15 min",SOIR_GROWTH.reduce((s,it)=>s+it.xp,0),SOIR_GROWTH.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Coucher","😴","avant 23h",COUCHER.reduce((s,it)=>s+it.xp,0),COUCHER.map(it=>itemHTML(it,di)).join(""))}
+    ${sec("Nutrition","🍳","",NUTRITION.reduce((s,it)=>s+it.xp,0),NUTRITION.map(it=>itemHTML(it,di)).join(""))}
+    ${HEBDO_DAYS.includes(di)?sec("Hebdomadaire (J3/J5/J7)","📅","~12 min",HEBDO.reduce((s,it)=>s+it.xp,0),HEBDO.map(it=>itemHTML(it,di)).join("")):""}
+  `;
+}
+
+// ── RENDER BUDGET ──
+function renderBudget(){
+  const el=document.getElementById("P_budget");if(!el)return;
+
+  const boughtIds=BUDGET_ITEMS.filter(b=>isBought(b.id)).map(b=>b.id);
+  const spentTotal=BUDGET_ITEMS.filter(b=>isBought(b.id)).reduce((s,b)=>s+b.price,0);
+  const remaining=BUDGET_TOTAL-spentTotal;
+  const pct=Math.round(spentTotal/BUDGET_TOTAL*100);
+
+  // Color for budget bar
+  const barColor=pct>85?"var(--red)":pct>60?"var(--orange)":"var(--green)";
+
+  const essentielItems=BUDGET_ITEMS.filter(b=>b.priority==="essentiel");
+  const utileItems=BUDGET_ITEMS.filter(b=>b.priority==="utile");
+
+  function bitemHTML(b){
+    const bought=isBought(b.id);
+    const expKey="bexp_"+b.id;const isExp=window[expKey]||false;
+    const priceColor=b.price===0?"var(--green)":"var(--text)";
+    return`<div class="bitem${bought?" bought":""}${isExp?" expanded":""}" id="BI_${b.id}">
+      <div class="bitem-top" onclick="toggleBoughtItem('${b.id}')">
+        <div class="bchk"></div>
+        <div class="bitem-info">
+          <div class="bitem-name">${b.name}</div>
+          <div class="bitem-where">${b.where}</div>
+        </div>
+        <span class="bitem-priority bp-${b.priority}">${b.priority}</span>
+        <span class="bitem-price" style="color:${priceColor}">${b.price===0?"gratuit":b.price+"€"}</span>
+        ${b.detail?`<span class="bitem-exp" onclick="event.stopPropagation();togBexp('${b.id}')">▾</span>`:""}
+      </div>
+      ${b.detail?`<div class="bitem-detail">${b.detail}</div>`:""}
+    </div>`;
+  }
+
+  el.innerHTML=`
+    <div class="budget-hero">
+      <div class="budget-hero-title">Budget Achats</div>
+      <div class="budget-hero-sub">Semaine de lancement · 70€ total</div>
+    </div>
+
+    <div class="budget-overview">
+      <div class="bov-card">
+        <div class="bov-val" style="color:var(--red)">${spentTotal}€</div>
+        <div class="bov-lbl">Dépensé</div>
+      </div>
+      <div class="bov-card">
+        <div class="bov-val" style="color:var(--green)">${remaining}€</div>
+        <div class="bov-lbl">Restant</div>
+      </div>
+      <div class="bov-card">
+        <div class="bov-val" style="color:var(--gold)">${BUDGET_TOTAL}€</div>
+        <div class="bov-lbl">Budget</div>
+      </div>
+    </div>
+
+    <div class="budget-bar-wrap">
+      <div class="budget-bar-label">
+        <span class="budget-bar-title">Budget utilisé</span>
+        <span class="budget-bar-pct" style="color:${barColor}">${pct}% · ${spentTotal}€ / ${BUDGET_TOTAL}€</span>
+      </div>
+      <div class="budget-bar"><div class="budget-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+    </div>
+
+    <div class="budget-note">
+      <strong>Priorité d'achat :</strong> Commence par les essentiels soin (nettoyant + hydratant = 22€). Ensuite nutrition (œufs + sardines + skyr + avoine = ~14€). Les <em>utiles</em> peuvent attendre si budget serré.
+    </div>
+
+    <div class="bsec">
+      <div class="bsec-title">Essentiels — Soin visage (~25€)</div>
+      ${essentielItems.filter(b=>['b1','b2','b3','b4','b5'].includes(b.id)).map(b=>bitemHTML(b)).join("")}
+    </div>
+
+    <div class="bsec">
+      <div class="bsec-title">Essentiels — Nutrition (budget récurrent)</div>
+      ${essentielItems.filter(b=>['b6','b7','b8','b9','b10'].includes(b.id)).map(b=>bitemHTML(b)).join("")}
+    </div>
+
+    <div class="bsec">
+      <div class="bsec-title">Utiles — Si budget restant</div>
+      ${utileItems.filter(b=>['b11','b12'].includes(b.id)).map(b=>bitemHTML(b)).join("")}
+    </div>
+
+    <div style="text-align:center;padding:10px 0;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted)">
+      ${boughtIds.length} / ${BUDGET_ITEMS.length} articles cochés · Coche quand tu achètes
+    </div>
   `;
 }
 
@@ -651,8 +797,7 @@ function renderDay(di){
 function renderHome(){
   const el=document.getElementById("P_home");if(!el)return;
   const xp=calcTotalXP();const rank=getRank(xp);const next=getNextRank(xp);
-  const streak=calcStreak();const level=getLevel(xp);
-  const todayXP=calcTodayXP();
+  const streak=calcStreak();const level=getLevel(xp);const todayXP=calcTodayXP();
   el.innerHTML=`
     <div id="home-hero">
       <div id="home-rank-circle">
@@ -664,37 +809,19 @@ function renderHome(){
       <div id="home-streak">🔥 ${streak} jours de streak · Niveau ${level}</div>
     </div>
     <div class="home-stats">
-      <div class="home-stat-card">
-        <div class="home-stat-icon">📈</div>
-        <div class="home-stat-val" style="color:var(--gold)">${xp}</div>
-        <div class="home-stat-lbl">XP Total</div>
-      </div>
-      <div class="home-stat-card">
-        <div class="home-stat-icon">🔥</div>
-        <div class="home-stat-val" style="color:var(--orange)">${streak}</div>
-        <div class="home-stat-lbl">Jours streak</div>
-      </div>
-      <div class="home-stat-card">
-        <div class="home-stat-icon">⚡</div>
-        <div class="home-stat-val" style="color:var(--cyan)">${todayXP}</div>
-        <div class="home-stat-lbl">XP aujourd'hui</div>
-      </div>
-      <div class="home-stat-card">
-        <div class="home-stat-icon">🏆</div>
-        <div class="home-stat-val" style="color:var(--purple)">${level}</div>
-        <div class="home-stat-lbl">Niveau</div>
-      </div>
+      <div class="home-stat-card"><div class="home-stat-icon">📈</div><div class="home-stat-val" style="color:var(--gold)">${xp}</div><div class="home-stat-lbl">XP Total</div></div>
+      <div class="home-stat-card"><div class="home-stat-icon">🔥</div><div class="home-stat-val" style="color:var(--orange)">${streak}</div><div class="home-stat-lbl">Jours streak</div></div>
+      <div class="home-stat-card"><div class="home-stat-icon">⚡</div><div class="home-stat-val" style="color:var(--cyan)">${todayXP}</div><div class="home-stat-lbl">XP auj.</div></div>
+      <div class="home-stat-card"><div class="home-stat-icon">🏆</div><div class="home-stat-val" style="color:var(--purple)">${level}</div><div class="home-stat-lbl">Niveau</div></div>
     </div>
     <button class="today-btn" onclick="switchDay(${todayI()})">→ ALLER À AUJOURD'HUI</button>
-    ${next?`<div style="font-size:12px;color:var(--muted2);text-align:center;margin-bottom:16px;font-family:'Share Tech Mono',monospace">Prochain rang : ${next.emoji} ${next.name} à ${next.minXP} XP · encore ${next.minXP-xp} XP</div>`:"<div style='text-align:center;color:var(--gold);font-size:13px;margin-bottom:16px'>RANG MAXIMUM ATTEINT 👑</div>"}
+    <button class="today-btn" style="color:var(--gold);border-color:rgba(245,200,66,0.4);background:linear-gradient(90deg,rgba(245,200,66,0.1),rgba(232,168,0,0.1));margin-top:-8px" onclick="switchBudget()">💰 GÉRER LE BUDGET</button>
+    ${next?`<div style="font-size:12px;color:var(--muted2);text-align:center;margin-bottom:16px;font-family:'Share Tech Mono',monospace">→ ${next.emoji} ${next.name} dans ${next.minXP-xp} XP</div>`:"<div style='text-align:center;color:var(--gold);font-size:13px;margin-bottom:16px'>RANG MAXIMUM 👑</div>"}
     <div class="ranks-section">
       <div class="ranks-title">TABLEAU DES RANGS</div>
       ${RANKS.map(r=>`<div class="rank-row${r.name===rank.name?" current-rank":""}">
         <span class="rank-emoji">${r.emoji}</span>
-        <div class="rank-info">
-          <div class="rank-name" style="color:${r.color}">${r.name}</div>
-          <div class="rank-req">${r.minXP} XP requis</div>
-        </div>
+        <div class="rank-info"><div class="rank-name" style="color:${r.color}">${r.name}</div><div class="rank-req">${r.minXP} XP</div></div>
         ${xp>=r.minXP?'<span class="rank-check">✓</span>':""}
       </div>`).join("")}
     </div>
@@ -707,22 +834,24 @@ function doToggleEx(ev,di,sk,i){ev.stopPropagation();const id=`e_${sk}_${i}`;tog
 function togExp(di,id){const k="exp_"+di+"_"+id;window[k]=!window[k];const el=document.getElementById("I_"+di+"_"+id);if(el)el.classList.toggle("expanded",window[k]);}
 function togExExp(di,sk,i){const k="exexp_"+di+"_"+sk+"_"+i;window[k]=!window[k];const el=document.getElementById("EX_"+di+"_"+sk+"_"+i);if(el)el.classList.toggle("expanded",window[k]);}
 function togSport(di){window["sport_open_"+di]=!window["sport_open_"+di];renderDay(di);}
+function toggleBoughtItem(id){toggleBought(id);}
+function togBexp(id){const k="bexp_"+id;window[k]=!window[k];const el=document.getElementById("BI_"+id);if(el)el.classList.toggle("expanded",window[k]);}
 
 // ── TABS ──
 let activeTab="home";
 function renderTabs(){
   const dayTabs=DAYS_SHORT.map((n,i)=>{
     const{pct}=dayProg(i);const isT=i===todayI();const sk=SK[i];
-    return`<div class="tab${activeTab===String(i)?" active":""}${isT?" today":""}" onclick="switchDay(${i})">
+    return`<div class="tab${activeTab===String(i)?" active":""}" onclick="switchDay(${i})">
       <span class="tab-icon">${SPORT[sk].emoji}</span>
       <span class="tab-lbl">${n}${isT?'<span style="color:var(--cyan)">·</span>':""}</span>
       <span class="tab-xp">${pct}%</span>
     </div>`;
   }).join("");
   document.getElementById("tabs").innerHTML=
-    `<div class="tab${activeTab==="home"?" active":""}" onclick="switchHome()">
-      <span class="tab-icon">🏠</span><span class="tab-lbl">Accueil</span><span class="tab-xp">XP</span>
-    </div>`+dayTabs;
+    `<div class="tab${activeTab==="home"?" active":""}" onclick="switchHome()"><span class="tab-icon">🏠</span><span class="tab-lbl">Accueil</span><span class="tab-xp">XP</span></div>`+
+    dayTabs+
+    `<div class="tab${activeTab==="budget"?" active":""}" onclick="switchBudget()"><span class="tab-icon">💰</span><span class="tab-lbl">Budget</span><span class="tab-xp">${BUDGET_ITEMS.filter(b=>isBought(b.id)).length}/${BUDGET_ITEMS.length}</span></div>`;
 }
 function switchDay(i){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
@@ -735,6 +864,11 @@ function switchHome(){
   document.getElementById("P_home").classList.add("active");
   activeTab="home";renderHome();renderTabs();
 }
+function switchBudget(){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("P_budget").classList.add("active");
+  activeTab="budget";renderBudget();renderTabs();
+}
 
 // ── INIT ──
 window.onload=function(){
@@ -742,13 +876,12 @@ window.onload=function(){
   const mo=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
   document.getElementById("date-display").textContent=DAYS_FR[todayI()]+" "+d.getDate()+" "+mo[d.getMonth()];
   const pg=document.getElementById("pages");
-  const home=document.createElement("div");
-  home.className="page active";home.id="P_home";pg.appendChild(home);
+  const home=document.createElement("div");home.className="page active";home.id="P_home";pg.appendChild(home);
   for(let i=0;i<7;i++){
-    const div=document.createElement("div");
-    div.className="page";div.id="P_"+i;pg.appendChild(div);renderDay(i);
+    const div=document.createElement("div");div.className="page";div.id="P_"+i;pg.appendChild(div);renderDay(i);
   }
-  renderHome();renderTabs();updateHeader();
+  const budgetPage=document.createElement("div");budgetPage.className="page";budgetPage.id="P_budget";pg.appendChild(budgetPage);
+  renderHome();renderBudget();renderTabs();updateHeader();
   lastRank=getRank(calcTotalXP());
 };
 </script>
